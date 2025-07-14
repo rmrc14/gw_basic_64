@@ -56,19 +56,7 @@ ctest --output-on-failure -C Debug
 
 🧩 Folder Structure
 
-gw_basic_64/
-├── main.cpp                  ← Entry point (REPL or File)
-├── gw_basic/                 ← Core interpreter
-│   ├── Lexer/                ← Tokenizer
-│   ├── Parser/               ← AST builder
-│   ├── Runtime/              ← Executor & Evaluator
-│   ├── ProgramInterface/     ← REPL, CLI handling
-│   ├── System/, IO/, Errors/ ← Support modules
-├── tests/                    ← Unit tests using GTest
-│   ├── test_dummy.cpp
-├── CMakeLists.txt            ← Build system
-├── .github/workflows/ci.yml ← CI pipeline
-
+<pre> <code>```text gw_basic_64/ ├── main.cpp ← Entry point (REPL or File) ├── gw_basic/ ← Core interpreter │ ├── Lexer/ ← Tokenizer │ ├── Parser/ ← AST builder │ ├── Runtime/ ← Executor & Evaluator │ ├── ProgramInterface/ ← REPL, CLI handling │ ├── System/, IO/, Errors/ ← Support modules ├── tests/ ← Unit tests using GTest │ ├── test_dummy.cpp ├── CMakeLists.txt ← Build system ├── .github/workflows/ci.yml ← CI pipeline ```</code> </pre>
 🧑‍💻 Team Workflow (Without PRs)
 Since PR reviews are not enforced yet, follow this direct-push workflow:
 
