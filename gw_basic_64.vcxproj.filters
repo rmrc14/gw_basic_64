@@ -18,21 +18,48 @@
     <ClInclude Include="gw_basic\GWBasic64.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="gw_basic\Errors\ErrorHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gw_basic\IO\ConsoleIO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gw_basic\Lexer\Lexer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gw_basic\Parser\Parser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gw_basic\ProgramInterface\CommandLineEditor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gw_basic\Runtime\ExpressionEvaluator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gw_basic\Runtime\StatementExecuter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gw_basic\Storage\ProgramMemory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gw_basic\System\SystemInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="gw_basic\GWBasic.cpp">
+    <ClCompile Include="gw_basic\GWBasic64.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gw_basic\Storage\pm.cpp">
+    <ClCompile Include="gw_basic\Storage\ProgramMemory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gw_basic\Lexer\l.cpp">
+    <ClCompile Include="gw_basic\Lexer\Lexer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gw_basic\Parser\p.cpp">
+    <ClCompile Include="gw_basic\Parser\Parser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gw_basic\Runtime\Se.cpp">
+    <ClCompile Include="gw_basic\Runtime\ExpressionEvaluator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="gw_basic\IO\ConsoleIO.cpp">
@@ -50,5 +77,14 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gw_basic\ProgramInterface\CommandLineEditor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gw_basic\Runtime\StatementExecuter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
   </ItemGroup>
 </Project>

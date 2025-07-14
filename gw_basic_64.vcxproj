@@ -127,19 +127,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="gw_basic\Errors\ErrorHandler.h" />
     <ClInclude Include="gw_basic\GWBasic64.h" />
+    <ClInclude Include="gw_basic\IO\ConsoleIO.h" />
+    <ClInclude Include="gw_basic\Lexer\Lexer.h" />
+    <ClInclude Include="gw_basic\Parser\Parser.h" />
+    <ClInclude Include="gw_basic\Runtime\ExpressionEvaluator.h" />
+    <ClInclude Include="gw_basic\Storage\ProgramMemory.h" />
+    <ClInclude Include="gw_basic\System\SystemInterface.h" />
+    <ClInclude Include="gw_basic\ProgramInterface\CommandLineEditor.h" />
+    <ClInclude Include="gw_basic\Runtime\StatementExecuter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gw_basic\Errors\ErrorHandler.cpp" />
-    <ClCompile Include="gw_basic\GWBasic.cpp" />
+    <ClCompile Include="gw_basic\GWBasic64.cpp" />
     <ClCompile Include="gw_basic\IO\ConsoleIO.cpp" />
-    <ClCompile Include="gw_basic\Lexer\l.cpp" />
-    <ClCompile Include="gw_basic\Parser\p.cpp" />
-    <ClCompile Include="gw_basic\Runtime\Se.cpp" />
-    <ClCompile Include="gw_basic\Storage\pm.cpp" />
+    <ClCompile Include="gw_basic\Lexer\Lexer.cpp" />
+    <ClCompile Include="gw_basic\Parser\Parser.cpp" />
+    <ClCompile Include="gw_basic\Runtime\ExpressionEvaluator.cpp" />
+    <ClCompile Include="gw_basic\Runtime\StatementExecuter.cpp" />
+    <ClCompile Include="gw_basic\Storage\ProgramMemory.cpp" />
     <ClCompile Include="gw_basic\System\SystemInterface.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="gw_basic\ProgramInterface\CommandLineEditor.cpp" />
     <ClCompile Include="Tests\test01.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
