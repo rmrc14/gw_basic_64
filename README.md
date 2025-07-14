@@ -25,7 +25,7 @@ Open **Developer Command Prompt for VS** or Git Bash:
 
 ```bash
 git clone https://github.com/rmrc14/gw_basic_64.git
-cd gw_basic_64 ```\bash
+cd gw_basic_64 ```/bash
 🧭 2. Open as a CMake Project in Visual Studio
 Launch Visual Studio
 
