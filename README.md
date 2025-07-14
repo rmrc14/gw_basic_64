@@ -1,61 +1,63 @@
 # GWBasic64 – Modern C++ Interpreter for GW-BASIC
 
-Welcome to the GWBasic64 project – a 64-bit modern C++ implementation of a GW-BASIC interpreter.
+Welcome to the **GWBasic64** project – a 64-bit modern C++ implementation of a GW-BASIC interpreter.
 
 This project includes:
 - REPL and file mode execution
 - Modular Lexer, Parser, Runtime, I/O system
-- Unit tests using GoogleTest (no external installation needed)
+- Unit tests using GoogleTest (auto-downloaded via CMake)
 
 ---
 
 ## 🧰 Requirements
 
-- [Visual Studio 2022 ]
+- [Visual Studio 2022](https://visualstudio.microsoft.com/)
 - C++ Desktop Development workload
 - Git
+
 ---
 
 ## 🧑‍💻 How to Set Up the Project on Windows (Using Visual Studio)
 
 ### 📥 1. Clone the Repository
 
-Open **Developer Command Prompt for VS** :
+Open **Developer Command Prompt for VS** or Git Bash:
 
-
+```bash
 git clone https://github.com/rmrc14/gw_basic_64.git
-
 cd gw_basic_64
-
-🧭 2. Open as CMake Project in Visual Studio
+🧭 2. Open as a CMake Project in Visual Studio
 Launch Visual Studio
 
 Go to File > Open > Folder...
 
-Select the folder: gw_basic_64
+Select the root folder: gw_basic_64
 
 Visual Studio will detect the CMakeLists.txt and configure automatically
 
 🛠️ 3. Build the Project
 From the top menu: Build > Build All
 
-Or click the 🔨 icon
+Or click the 🔨 Build icon
 
-It will download GoogleTest automatically and compile everything
+📦 GoogleTest will be downloaded and compiled automatically
 
 🧪 4. Run the Unit Tests
-From Visual Studio:
-
+Option A – Visual Studio GUI:
 Go to Test > Test Explorer
 
 Click Run All Tests
 
-Or from terminal:
+Option B – Command Line:
+bash
+Copy
+Edit
 cd build
 ctest --output-on-failure -C Debug
-
 🧩 Folder Structure
-
+text
+Copy
+Edit
 gw_basic_64/
 ├── main.cpp                  ← Entry point (REPL or File)
 ├── gw_basic/                 ← Core interpreter
@@ -63,41 +65,51 @@ gw_basic_64/
 │   ├── Parser/               ← AST builder
 │   ├── Runtime/              ← Executor & Evaluator
 │   ├── ProgramInterface/     ← REPL, CLI handling
-│   ├── System/, IO/, Errors/ ← Support modules
+│   ├── System/               ← System functions (memory, etc.)
+│   ├── IO/                   ← Console I/O, FILES
+│   ├── Errors/               ← Error handling
 ├── tests/                    ← Unit tests using GTest
-│   ├── test_dummy.cpp
+│   └── test_dummy.cpp
 ├── CMakeLists.txt            ← Build system
-├── .github/workflows/ci.yml ← CI pipeline
+├── .github/
+│   └── workflows/ci.yml      ← GitHub Actions CI pipeline
+👨‍💻 Team Workflow (No Pull Requests Required)
+Since PRs are not enforced yet, contributors can follow this direct push workflow:
 
-🧑‍💻 Team Workflow (Without PRs)
-Since PR reviews are not enforced yet, follow this direct-push workflow:
-
-1. Create Your Own Branch
-
+🔀 1. Create Your Feature Branch
+bash
+Copy
+Edit
 git checkout -b feature/<your_module>
-E.g., feature/parser, feature/runtime
+Example: feature/parser, feature/runtime
 
-2. Make Changes in Your Module Folder
-Use the right folder: Lexer/, Parser/, Runtime/, etc.
+💻 2. Make Your Changes
+Work inside your assigned module folder:
 
-3. Build and Run Tests
-Ensure your code builds and passes tests before pushing.
+Lexer/, Parser/, Runtime/, etc.
 
-4. Push Your Changes
+🔍 3. Build and Test
+Ensure your changes compile cleanly and tests pass:
 
+bash
+Copy
+Edit
+ctest --output-on-failure -C Debug
+☁️ 4. Push Changes
+bash
+Copy
+Edit
 git add .
-git commit -m "Add parser expression support"
-git push origin feature/parser
-
-6. Merge to main (Optional)
-If you're working in a small team and allowed to push:
-
+git commit -m "Add <your_feature_description>"
+git push origin feature/<your_module>
+🔀 5. Merge to main (Optional, if allowed)
+bash
+Copy
+Edit
 git checkout main
-git merge feature/parser
+git merge feature/<your_module>
 git push origin main
+✅ Best Practices
+✅ Keep commits modular and clear
 
-❗ Best Practices 
-Keep your changes modular
-
-Always run tests before pushing
-
+✅ Run tests before pushing
