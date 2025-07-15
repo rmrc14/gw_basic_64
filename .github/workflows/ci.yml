@@ -35,7 +35,7 @@ jobs:
       run: dir build\Release
 
     - name: Run Tests
-      run: ctest --test-dir build/tests/Tests --output-on-failure -C Release
+      run: ctest --test-dir build --output-on-failure -C Release
 
     - name: Upload Executable Only
       uses: actions/upload-artifact@v4
