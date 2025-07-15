@@ -31,4 +31,4 @@ target_link_libraries(gw_basic_64 PRIVATE gw_basic_core)
 # Enable testing and add test subdirectory
 enable_testing()
 add_subdirectory(tests)
-set_target_properties(run_tests PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/tests)
+#set_target_properties(run_tests PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/tests)
