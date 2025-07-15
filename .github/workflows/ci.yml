@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-
     runs-on: windows-latest
 
     steps:
@@ -18,7 +17,15 @@ jobs:
     - name: Setup CMake
       uses: lukka/get-cmake@latest
 
-    - name: Configure
+    - name: Cache CMake FetchContent Dependencies
+      uses: actions/cache@v4
+      with:
+        path: build/_deps
+        key: ${{ runner.os }}-cmake-cache-${{ hashFiles('**/CMakeLists.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-cmake-cache-
+
+    - name: Configure with CMake
       run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 
     - name: Build
@@ -27,7 +34,7 @@ jobs:
     - name: Run Tests
       run: ctest --test-dir build --output-on-failure -C Release
 
-    - name: Upload Executable
+    - name: Upload Executable Only
       uses: actions/upload-artifact@v4
       with:
         name: gw_basic_64
