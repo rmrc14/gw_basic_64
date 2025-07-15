@@ -19,7 +19,8 @@ Make sure you have:
 
 Open Developer Command Prompt or Git Bash:
 
-<pre>  git clone https://github.com/rmrc14/gw_basic_64.git cd gw_basic_64  </pre>
+<pre>  git clone https://github.com/rmrc14/gw_basic_64.git 
+       cd gw_basic_64  </pre>
 
 ###2. Create a New Branch for Your Work
 bash
