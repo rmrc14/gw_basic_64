@@ -51,24 +51,6 @@ Click Run All Tests
 Option B – Command Line:
 <prev>cd build
 ctest --output-on-failure -C Debug</prev>
-## 🧩 Folder Structure
-
-<prev>
-gw_basic_64/
-├── main.cpp                  ← Entry point (REPL or File)
-├── gw_basic/                 ← Core interpreter
-│   ├── Lexer/                ← Tokenizer
-│   ├── Parser/               ← AST builder
-│   ├── Runtime/              ← Executor & Evaluator
-│   ├── ProgramInterface/     ← REPL, CLI handling
-│   ├── System/               ← System functions (memory, etc.)
-│   ├── IO/                   ← Console I/O, FILES
-│   ├── Errors/               ← Error handling
-├── tests/                    ← Unit tests using GTest
-│   └── test_dummy.cpp
-├── CMakeLists.txt            ← Build system
-├── .github/
-│   └── workflows/ci.yml      ← GitHub Actions CI pipeline</prev>
 
 ## 👨‍💻 Team Workflow (No Pull Requests Required)
 Since PRs are not enforced 
@@ -101,3 +83,23 @@ git push origin main</prev>
 ✅ Keep commits modular and clear
 
 ✅ Run tests before pushing
+
+## 🧩 Folder Structure
+
+```bash
+gw_basic_64/
+├── main.cpp                  ← Entry point (REPL or File)
+├── gw_basic/                 ← Core interpreter
+│   ├── Lexer/                ← Tokenizer
+│   ├── Parser/               ← AST builder
+│   ├── Runtime/              ← Executor & Evaluator
+│   ├── ProgramInterface/     ← REPL, CLI handling
+│   ├── System/               ← System functions (memory, etc.)
+│   ├── IO/                   ← Console I/O, FILES
+│   ├── Errors/               ← Error handling
+├── tests/                    ← Unit tests using GTest
+│   └── test_dummy.cpp
+├── CMakeLists.txt            ← Build system
+├── .github/
+│   └── workflows/ci.yml      ← GitHub Actions CI pipeline
+
