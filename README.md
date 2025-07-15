@@ -1,4 +1,12 @@
-# GWBasic64 – Modern C++ Interpreter for GW-BASIC
+# GWBasic64 – 64-bit C++ Interpreter for GW-BASIC
+
+[![Build Status](https://github.com/rmrc14/gw_basic_64/actions/workflows/ci.yml/badge.svg)](https://github.com/rmrc14/gw_basic_64/actions)
+![GitHub License](https://img.shields.io/github/license/rmrc14/gw_basic_64)
+![GitHub repo size](https://img.shields.io/github/repo-size/rmrc14/gw_basic_64)
+![C++17](https://img.shields.io/badge/C%2B%2B-17-blue.svg)
+![Platform](https://img.shields.io/badge/Platform-Windows-blue.svg)
+
+
 
 Welcome to the **GWBasic64** project – a 64-bit modern C++ implementation of a GW-BASIC interpreter.
 
