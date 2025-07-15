@@ -44,10 +44,10 @@ Visual Studio will auto-detect CMakeLists.txt and configure the project
 
 ### 🧪 4. Build and Run Tests
 In Visual Studio:
-
+<prev>
 Click Build > Build All
 
-Run all tests: Test > Test Explorer > Run All Tests
+Run all tests: Test > Test Explorer > Run All Tests</prev>
 
 Or from terminal:
 
