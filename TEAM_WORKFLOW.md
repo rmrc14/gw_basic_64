@@ -22,3 +22,19 @@ Open Developer Command Prompt or Git Bash:
 ```bash
 git clone https://github.com/rmrc14/gw_basic_64.git
 cd gw_basic_64
+
+
+###2. Create a New Branch for Your Work
+bash
+Copy
+Edit
+git checkout -b feature/<your_module_or_task>
+Examples:
+
+bash
+Copy
+Edit
+git checkout -b feature/lexer
+git checkout -b feature/parser-fix
+git checkout -b feature/add-input-support
+This keeps everyone's changes organized.
