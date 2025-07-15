@@ -4,7 +4,7 @@
 
 int main(int argc, char* argv[]) 
 {
-    //test version
+    //test version 14
     GWBasic64 basic;
     try 
     {
