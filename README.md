@@ -35,29 +35,26 @@ Select the root folder: gw_basic_64
 
 Visual Studio will detect the CMakeLists.txt and configure automatically
 
-🛠️ 3. Build the Project
+### 🛠️ 3. Build the Project
 From the top menu: Build > Build All
 
 Or click the 🔨 Build icon
 
-📦 GoogleTest will be downloaded and compiled automatically
+## 📦 GoogleTest will be downloaded and compiled automatically
 
-🧪 4. Run the Unit Tests
+### 🧪 4. Run the Unit Tests
 Option A – Visual Studio GUI:
-Go to Test > Test Explorer
+<prev>
+Go to Test > Test Explorer</prev>
 
 Click Run All Tests
 
 Option B – Command Line:
-bash
-Copy
-Edit
-cd build
-ctest --output-on-failure -C Debug
-🧩 Folder Structure
-text
-Copy
-Edit
+<prev>cd build
+ctest --output-on-failure -C Debug</prev>
+## 🧩 Folder Structure
+
+<prev>
 gw_basic_64/
 ├── main.cpp                  ← Entry point (REPL or File)
 ├── gw_basic/                 ← Core interpreter
@@ -72,43 +69,35 @@ gw_basic_64/
 │   └── test_dummy.cpp
 ├── CMakeLists.txt            ← Build system
 ├── .github/
-│   └── workflows/ci.yml      ← GitHub Actions CI pipeline
-👨‍💻 Team Workflow (No Pull Requests Required)
-Since PRs are not enforced yet, contributors can follow this direct push workflow:
+│   └── workflows/ci.yml      ← GitHub Actions CI pipeline</prev>
 
-🔀 1. Create Your Feature Branch
-bash
-Copy
-Edit
-git checkout -b feature/<your_module>
+## 👨‍💻 Team Workflow (No Pull Requests Required)
+Since PRs are not enforced 
+
+### 🔀 1. Create Your Feature Branch
+<prev>
+git checkout -b feature/<your_module> </prev>
 Example: feature/parser, feature/runtime
 
-💻 2. Make Your Changes
+### 💻 2. Make Your Changes
 Work inside your assigned module folder:
 
 Lexer/, Parser/, Runtime/, etc.
 
-🔍 3. Build and Test
-Ensure your changes compile cleanly and tests pass:
+### 🔍 3. Build and Test
+## Ensure your changes compile cleanly and tests pass:
 
-bash
-Copy
-Edit
-ctest --output-on-failure -C Debug
-☁️ 4. Push Changes
-bash
-Copy
-Edit
+<prev>ctest --output-on-failure -C Debug</prev>
+### ☁️ 4. Push Changes
+<prev>
 git add .
 git commit -m "Add <your_feature_description>"
-git push origin feature/<your_module>
-🔀 5. Merge to main (Optional, if allowed)
-bash
-Copy
-Edit
+git push origin feature/<your_module> </prev>
+### 🔀 5. Merge to main (Optional, if allowed)
+<prev>
 git checkout main
 git merge feature/<your_module>
-git push origin main
+git push origin main</prev>
 ✅ Best Practices
 ✅ Keep commits modular and clear
 
