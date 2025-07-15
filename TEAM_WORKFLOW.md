@@ -20,19 +20,15 @@ Make sure you have:
 Open Developer Command Prompt or Git Bash:
 
 <pre>  git clone https://github.com/rmrc14/gw_basic_64.git 
-       cd gw_basic_64  </pre>
+cd gw_basic_64  </pre>
 
-###2. Create a New Branch for Your Work
-bash
-Copy
-Edit
-git checkout -b feature/<your_module_or_task>
+### 2. Create a New Branch for Your Work
+
+<pre> git checkout -b feature/<your_module_or_task>  </pre>
 Examples:
 
-bash
-Copy
-Edit
+<pre>
 git checkout -b feature/lexer
 git checkout -b feature/parser-fix
-git checkout -b feature/add-input-support
+git checkout -b feature/add-input-support  </pre>
 This keeps everyone's changes organized.
