@@ -22,11 +22,10 @@ This project includes:
 ### 📥 1. Clone the Repository
 
 Open **Developer Command Prompt for VS** or Git Bash:
-
-```bash
+<prev>
 git clone https://github.com/rmrc14/gw_basic_64.git
-cd gw_basic_64 
-🧭 2. Open as a CMake Project in Visual Studio
+cd gw_basic_64 </prev>
+## 🧭 2. Open as a CMake Project in Visual Studio
 Launch Visual Studio
 
 Go to File > Open > Folder...
