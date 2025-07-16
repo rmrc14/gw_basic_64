@@ -1,37 +1,24 @@
-
-/*class ProgramMemory {
-public:
-    ProgramMemory();
-
-    void storeLine(std::string);//todo magesh
-    /*void ProgramMemory::storeLine(const std::string&);
-    std::map<int, std::string> ProgramMemory::getAllLines();
-    void ProgramMemory::list(ConsoleIO&);*/
-    // ProgramMemory.h*/
 #pragma once
-
-#include <map>
 #include <string>
+#include <map>
 #include <vector>
 
-    class ProgramMemory {
-    public:
-        // Constructor
-        ProgramMemory();
+//namespace gw_basic::storage {
 
-        // Store a line in memory (like entering "10 PRINT \"HELLO\"")
-        void storeLine(const std::string& inputLine);
+class ProgramMemory {
+public:
+    void insertLine(int lineNumber, const std::string& code);
+    void deleteLine(int lineNumber);
+    std::string getLine(int lineNumber) const;
+    std::vector<std::string> listProgram() const;
 
-        // Return all stored lines in order for listing or saving
-        std::vector<std::string> getAllLines() const;
+    bool saveToFile(const std::string& filename) const;
+    bool loadFromFile(const std::string& filename);
 
-        // Clear all stored program lines
-        void clear();
+    void clear();
 
-    private:
-        std::map<int, std::string> programLines;
+private:
+    std::map<int, std::string> programLines;
+};
 
-        // Helper: parse a line like "10 PRINT \"HELLO\"" into {lineNumber, code}
-        bool parseLine(const std::string& inputLine, int& lineNumber, std::string& code);
-    };
-
+//}
