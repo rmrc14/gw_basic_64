@@ -24,13 +24,13 @@ cd gw_basic_64  </pre>
 
 ### 2. Create a New Branch for Your Work
 
-<pre> git checkout -b feature/<your_module_or_task>  </pre>
+<prev> git checkout -b feature/<your_module_or_task>  </prev>
 Examples:
 
-<pre>
+<prev>
 git checkout -b feature/lexer
 git checkout -b feature/parser-fix
-git checkout -b feature/add-input-support  </pre>
+git checkout -b feature/add-input-support  </prev>
 This keeps everyone's changes organized.
 
 ### 🛠️ 3. Open the Project in Visual Studio
@@ -47,7 +47,7 @@ In Visual Studio:
 <prev>
 Click Build > Build All
 
-Run all tests: Test > Test Explorer > Run All Tests</prev>
+Run all tests: Test > Test Explorer > Run All Tests </prev>
 
 Or from terminal:
 
