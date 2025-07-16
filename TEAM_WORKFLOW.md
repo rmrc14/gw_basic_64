@@ -19,8 +19,8 @@ Make sure you have:
 
 Open Developer Command Prompt or Git Bash:
 
-<pre>  git clone https://github.com/rmrc14/gw_basic_64.git 
-cd gw_basic_64  </pre>
+<prev>  git clone https://github.com/rmrc14/gw_basic_64.git 
+cd gw_basic_64  </prev>
 
 ### 2. Create a New Branch for Your Work
 
@@ -52,7 +52,7 @@ Run all tests: Test > Test Explorer > Run All Tests </prev>
 Or from terminal:
 
 <prev>
-ctest --output-on-failure -C Debug</prev>
+ctest --output-on-failure -C Debug </prev>
 
 ### 💻 5. Make Your Changes
 Edit files inside your assigned folder/module:
