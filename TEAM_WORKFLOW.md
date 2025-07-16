@@ -66,6 +66,7 @@ Keep your work modular and test after every major change.
 git add .
 git commit -m "Add feature: parser enhancement"
 git push origin feature/<your_module_or_task> </prev>
+  
 This pushes your branch to GitHub under your name.
   
 ### 🔄 7. Sync with main Without Losing Your Work
@@ -75,7 +76,8 @@ If main has been updated (e.g., someone pushed new changes to your module):
 <prev>
 git checkout feature/<your_module_or_task>
 git fetch origin
-git merge origin/main</prev>
+git merge origin/main </prev>
+  
 This brings the latest changes from main into your branch while preserving your work. You may be prompted to resolve conflicts if any.
 
 ### 🚀 8. Merge to main (If Allowed)
@@ -84,8 +86,9 @@ Only after your code is tested and working:
 git checkout main
 git pull origin main
 git merge feature/<your_module_or_task>
-git push origin main</prev>
-🧼 Best Practices
+git push origin main </prev>
+
+## 🧼 Best Practices
 ✅ Create a new branch for every task
 ✅ Build and test before every commit
 ✅ Keep commits focused – 1 feature = 1 commit (ideally)
