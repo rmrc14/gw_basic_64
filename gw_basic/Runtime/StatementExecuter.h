@@ -1,6 +1,8 @@
 #pragma once
 
-class StatementExecutor {
+class StatementExecuter {
 public:
-    StatementExecutor();
+    StatementExecuter();
+    //void StatementExecuter::execute(const ASTNode&);
+    // todo by nivya 
 };
