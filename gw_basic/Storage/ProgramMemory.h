@@ -1,24 +1,41 @@
-#pragma once
+// gw_basic/Storage/ProgramMemory.h
+
+#ifndef PROGRAM_MEMORY_H
+#define PROGRAM_MEMORY_H
+
 #include <string>
 #include <map>
 #include <vector>
 
-//namespace gw_basic::storage {
+namespace gw_basic::storage {
 
-class ProgramMemory {
-public:
-    void insertLine(int lineNumber, const std::string& code);
-    void deleteLine(int lineNumber);
-    std::string getLine(int lineNumber) const;
-    std::vector<std::string> listProgram() const;
+    class ProgramMemory {
+    private:
+        std::map<int, std::string> programLines; // Stores line numbers and corresponding code
 
-    bool saveToFile(const std::string& filename) const;
-    bool loadFromFile(const std::string& filename);
+    public:
+        // Inserts or updates a line of code
+        void insertLine(int lineNumber, const std::string& code);
 
-    void clear();
+        // Deletes a line of code
+        void deleteLine(int lineNumber);
 
-private:
-    std::map<int, std::string> programLines;
-};
+        // Retrieves a line of code
+        std::string getLine(int lineNumber) const;
 
-//}
+        // Lists all program lines
+        std::vector<std::string> listProgram() const;
+
+        // Saves the program to a file
+        bool saveToFile(const std::string& filename) const;
+
+        // Loads the program from a file
+        bool loadFromFile(const std::string& filename);
+
+        // Clears all program lines
+        void clear();
+    };
+
+} // namespace gw_basic::storage
+
+#endif // PROGRAM_MEMORY_H
