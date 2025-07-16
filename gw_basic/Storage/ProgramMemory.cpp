@@ -1,70 +1,58 @@
-// gw_basic/Storage/ProgramMemory.cpp
+// ProgramMemory.cpp
 
 #include "ProgramMemory.h"
-#include <fstream>
 #include <sstream>
 #include <iostream>
 
-namespace gw_basic::storage {
+// Constructor
+ProgramMemory::ProgramMemory() {}
 
-    void ProgramMemory::insertLine(int lineNumber, const std::string& code) {
-        if (code.empty()) {
-            programLines.erase(lineNumber); // Delete line if code is empty
-        }
-        else {
-            programLines[lineNumber] = code; // Insert or update line
-        }
+// Store a line into memory
+void ProgramMemory::storeLine(const std::string& inputLine) {
+    int lineNumber;
+    std::string code;
+
+    // Try to parse the input
+    if (!parseLine(inputLine, lineNumber, code)) {
+        std::cerr << "Invalid input line: " << inputLine << "\n";
+        return;
     }
 
-    void ProgramMemory::deleteLine(int lineNumber) {
-        programLines.erase(lineNumber); // Delete specified line
+    if (code.empty()) {
+        // If code is empty, delete the line (like in GW-BASIC)
+        programLines.erase(lineNumber);
+    }
+    else {
+        // Otherwise, insert/update the line
+        programLines[lineNumber] = code;
+    }
+}
+
+// Return all stored lines in ascending order
+std::vector<std::string> ProgramMemory::getAllLines() const {
+    std::vector<std::string> lines;
+    for (const auto& [lineNumber, code] : programLines) {
+        lines.push_back(std::to_string(lineNumber) + " " + code);
+    }
+    return lines;
+}
+
+// Clear all lines from memory
+void ProgramMemory::clear() {
+    programLines.clear();
+}
+
+// Parse an input like "10 PRINT \"HELLO\"" into lineNumber and code
+bool ProgramMemory::parseLine(const std::string& inputLine, int& lineNumber, std::string& code) {
+    std::istringstream iss(inputLine);
+    if (!(iss >> lineNumber)) {
+        return false;
     }
 
-    std::string ProgramMemory::getLine(int lineNumber) const {
-        auto it = programLines.find(lineNumber);
-        return (it != programLines.end()) ? it->second : ""; // Return code or empty string
+    std::getline(iss, code);
+    if (!code.empty() && code[0] == ' ') {
+        code.erase(0, 1); // Remove leading space
     }
 
-    std::vector<std::string> ProgramMemory::listProgram() const {
-        std::vector<std::string> lines;
-        for (const auto& [lineNum, code] : programLines) {
-            lines.push_back(std::to_string(lineNum) + " " + code); // Format: lineNumber code
-        }
-        return lines;
-    }
-
-    bool ProgramMemory::saveToFile(const std::string& filename) const {
-        std::ofstream out(filename);
-        if (!out.is_open()) return false;
-
-        for (const auto& [lineNum, code] : programLines) {
-            out << lineNum << " " << code << "\n"; // Write each line to file
-        }
-
-        return true;
-    }
-
-    bool ProgramMemory::loadFromFile(const std::string& filename) {
-        std::ifstream in(filename);
-        if (!in.is_open()) return false;
-
-        programLines.clear(); // Clear existing program lines
-        std::string line;
-        while (std::getline(in, line)) {
-            std::istringstream iss(line);
-            int lineNum;
-            std::string code;
-            if (!(iss >> lineNum)) continue;
-            std::getline(iss, code);
-            if (!code.empty() && code[0] == ' ') code.erase(0, 1); // Remove leading space
-            programLines[lineNum] = code; // Insert line into program
-        }
-
-        return true;
-    }
-
-    void ProgramMemory::clear() {
-        programLines.clear(); // Clear all program lines
-    }
-
-} // namespace gw_basic::storage
+    return true;
+}
