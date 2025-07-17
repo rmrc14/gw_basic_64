@@ -1,5 +1,5 @@
 #include "StatementExecuter.h"
 
-StatementExecutor::StatementExecuter() {
+StatementExecuter::StatementExecuter() {
     // TODO: Implement StatementExecuter
 }

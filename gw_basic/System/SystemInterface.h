@@ -1,19 +1,20 @@
 #pragma once
 
-namespace SystemInterface {
+class SystemInterface {
+    
+public:
+    // Setup
+    static void init();
 
     // Console I/O
-    void putChar(char c);
-    char getChar();
-    void printString(const char* str);
-
+    static void putChar(char c);
+    static char getChar();
+    static void printString(const char* str);
+    // File IO
+    static bool openFile(const std::string& filename);
+    static void closeFile();
     // Screen/UI
-    void clearScreen();
-    void moveCursor(int x, int y);
-
-
-    // Setup
-    void init();
-
-    
-}
+    static void clearScreen();
+    static void moveCursor(int x, int y);
+    static bool readLine(std::string&);
+};

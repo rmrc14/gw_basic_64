@@ -3,35 +3,33 @@
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
-#include <cctype>
+
 
 #define DIRECT_MODE -1
 
 // intialising the object using default const.
 GWBasic64::GWBasic64()   
-	:lexer(),parser(),executer(),programMemory(),errorHandler(),console(),cli(),io() {}
+	:lexer(),parser(),executer(),programMemory(),errorHandler(),console(),cli() {}
 
 
 //-----------------   running .bas directly from main()     --------------
 
 void GWBasic64::loadAndRunFile(const std::string& filename) 
 {
-	std::fstream fin(filename);
 
-	if (!fin.is_open())
+	if (!SystemInterface::openFile(filename))
 	{
 		throw std::runtime_error("unable to open file: " + filename);
 	}
+	
 	std::string line;
 
-	while (cli.getLine(fin, line))
+	while (SystemInterface::readLine(line))// made true if contains string
 	{
-		if(!line.empty())   // made true if contains string
-		{
-			programMemory.storeLine(line);
-		}
+		programMemory.storeLine(line);
 	}
-	fin.close();
+
+	SystemInterface::closeFile();
 	executeProgram(); // calls it execute the line stored in the memory module
 }
 
@@ -71,9 +69,10 @@ void GWBasic64::runREPL()
 	std::string line;
 	while (true)
 	{
-		std::cout << "Ok" << std::endl;  //needs to print first on every iteration
-		std::cout << "> ";
-		if (!std::getline(std::cin, line)) break;
+		SystemInterface::printString("Ok\n"); //needs to print first on every iteration
+		SystemInterface::printString("> ");
+
+		if (!cli.getLine(line)) break;
 		try
 		{
 			if (line.empty()) continue;  //user presses enter twice
@@ -88,9 +87,11 @@ void GWBasic64::runREPL()
 			}
 			else if (line == "LIST")
 			{
-				//todo
-				std::cout << "todo\n";
 				//programMemory.list(console);
+			}
+			else if (line == "EXIT")
+			{
+				break;
 			}
 			else
 			{
@@ -109,7 +110,7 @@ void GWBasic64::runREPL()
 }
 
 
-void executeLine(const std::string& line)
+void  GWBasic64::executeLine(const std::string& line)
 {
 
 	auto tokens = lexer.tokenize(line);     //calls lexer to tokenize using enum
