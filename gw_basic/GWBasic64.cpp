@@ -9,7 +9,7 @@
 
 // intialising the object using default const.
 GWBasic64::GWBasic64()   
-	:lexer(),parser(),executer(),programMemory(),errorHandler(),console() {}
+	:lexer(),parser(),executer(),programMemory(),errorHandler(),console(),cli(),io() {}
 
 
 //-----------------   running .bas directly from main()     --------------
@@ -24,7 +24,7 @@ void GWBasic64::loadAndRunFile(const std::string& filename)
 	}
 	std::string line;
 
-	while (std::getline(fin, line))
+	while (cli.getLine(fin, line))
 	{
 		if(!line.empty())   // made true if contains string
 		{
@@ -107,7 +107,6 @@ void GWBasic64::runREPL()
 	}
 
 }
-
 
 
 void executeLine(const std::string& line)

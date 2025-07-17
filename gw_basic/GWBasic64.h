@@ -22,7 +22,8 @@ private:
     ProgramMemory programMemory;
     ErrorHandler errorHandler;
     ConsoleIO console;
-
+    CommandLineEditor cli;
+    ConsoleIO io;
     // member function
     void executeProgram();
     void executeLine(const std::string& line);
