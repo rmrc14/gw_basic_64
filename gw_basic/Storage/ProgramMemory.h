@@ -1,41 +1,45 @@
-// gw_basic/Storage/ProgramMemory.h
 
+/*class ProgramMemory {
+public:
+    ProgramMemory();
+
+    void storeLine(std::string);//todo magesh
+    /*void ProgramMemory::storeLine(const std::string&);
+    std::map<int, std::string> ProgramMemory::getAllLines();
+    void ProgramMemory::list(ConsoleIO&);*/
+    // ProgramMemory.h*/
 #ifndef PROGRAM_MEMORY_H
 #define PROGRAM_MEMORY_H
 
 #include <string>
 #include <map>
-#include <vector>
 
-namespace gw_basic::storage {
+// Forward declaration of ConsoleIO class
+class ConsoleIO;
 
-    class ProgramMemory {
-    private:
-        std::map<int, std::string> programLines; // Stores line numbers and corresponding code
+class ProgramMemory {
+public:
+    ProgramMemory(); // Constructor
 
-    public:
-        // Inserts or updates a line of code
-        void insertLine(int lineNumber, const std::string& code);
+    void storeLine(int lineNumber, const std::string& code);
 
-        // Deletes a line of code
-        void deleteLine(int lineNumber);
+    // Function to store a line in memory
+    void storeLine(const std::string& line);
 
-        // Retrieves a line of code
-        std::string getLine(int lineNumber) const;
+    // Function to get all lines stored in memory
+    std::map<int, std::string> getAllLines() const;
 
-        // Lists all program lines
-        std::vector<std::string> listProgram() const;
+    std::vector<int> getLineNumbers() const;
 
-        // Saves the program to a file
-        bool saveToFile(const std::string& filename) const;
+    // Function to list all stored lines on the console
+    void list(ConsoleIO& console);
 
-        // Loads the program from a file
-        bool loadFromFile(const std::string& filename);
+    void ProgramMemory::clear();
 
-        // Clears all program lines
-        void clear();
-    };
-
-} // namespace gw_basic::storage
+private:
+    int line_counter;  // Counter to generate unique line numbers
+    std::map<int, std::string> memory;  // Map to store lines with their corresponding line numbers
+};
 
 #endif // PROGRAM_MEMORY_H
+
