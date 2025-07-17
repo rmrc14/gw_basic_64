@@ -5,6 +5,8 @@
 #include <stdexcept>
 #include <cctype>
 
+#define DIRECT_MODE -1
+
 // intialising the object using default const.
 GWBasic64::GWBasic64()   
 	:lexer(),parser(),executer(),programMemory(),errorHandler(),console() {}
@@ -98,7 +100,7 @@ void GWBasic64::runREPL()
 		}
 		catch (const std::exception& e)
 		{
-			errorHandler.runtimeError(-1, e.what()); 
+			errorHandler.runtimeError(DIRECT_MODE, e.what());
 			break; 
 
 		}

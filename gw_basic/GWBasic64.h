@@ -7,6 +7,7 @@
 #include "Errors/ErrorHandler.h"
 #include "IO/ConsoleIO.h"
 #include "Runtime/StatementExecuter.h"
+#include "ProgramInterface/CommandLineEditor.h"
 
 #include <string>
 
