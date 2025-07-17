@@ -36,7 +36,8 @@
 │
 │   ├── System/                      ← System functions & utilities
 │   │   ├── SystemInterface.h
-│   │   ├── SystemInterface.cpp
+│   │   ├── SystemInterface_Windows.cpp
+│   │   ├── SystemInterface_MiniOS.cpp  //custom OS to be implemented do we need asm?
 │   │   ├── MemoryInterface.h        ← Simulate memory (optional)
 │   │   └── MemoryInterface.cpp
 │
