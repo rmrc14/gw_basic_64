@@ -19,18 +19,18 @@ Make sure you have:
 
 Open Developer Command Prompt or Git Bash:
 
-<prev>  git clone https://github.com/rmrc14/gw_basic_64.git 
-cd gw_basic_64  </prev>
+<pre>  git clone https://github.com/rmrc14/gw_basic_64.git 
+cd gw_basic_64  </pre>
 
 ### 2. Create a New Branch for Your Work
 
-<prev> git checkout -b feature/<your_module_or_task>  </prev>
+<pre> git checkout -b feature/<your_module_or_task>  </pre>
 Examples:
 
-<prev>
+<pre>
 git checkout -b feature/lexer
 git checkout -b feature/parser-fix
-git checkout -b feature/add-input-support  </prev>
+git checkout -b feature/add-input-support  </pre>
 This keeps everyone's changes organized.
 
 ### 🛠️ 3. Open the Project in Visual Studio
@@ -44,15 +44,15 @@ Visual Studio will auto-detect CMakeLists.txt and configure the project
 
 ### 🧪 4. Build and Run Tests
 In Visual Studio:
-<prev>
+<pre>
 Click Build > Build All
 
-Run all tests: Test > Test Explorer > Run All Tests </prev>
+Run all tests: Test > Test Explorer > Run All Tests </pre>
 
 Or from terminal:
 
-<prev>
-ctest --output-on-failure -C Debug </prev>
+<pre>
+ctest --output-on-failure -C Debug </pre>
 
 ### 💻 5. Make Your Changes
 Edit files inside your assigned folder/module:
@@ -62,10 +62,10 @@ Lexer/, Parser/, Runtime/, etc.
 Keep your work modular and test after every major change.
 
 ### 💾 6. Commit and Push Your Branch
-<prev>
+<pre>
 git add .
 git commit -m "Add feature: parser enhancement"
-git push origin feature/<your_module_or_task> </prev>
+git push origin feature/<your_module_or_task> </pre>
   
 This pushes your branch to GitHub under your name.
   
@@ -73,20 +73,20 @@ This pushes your branch to GitHub under your name.
 If main has been updated (e.g., someone pushed new changes to your module):
 
 ## ✅ Option 1: Safe Method – Merge main into your branch
-<prev>
+<pre>
 git checkout feature/<your_module_or_task>
 git fetch origin
-git merge origin/main </prev>
+git merge origin/main </pre>
   
 This brings the latest changes from main into your branch while preserving your work. You may be prompted to resolve conflicts if any.
 
 ### 🚀 8. Merge to main (If Allowed)
 Only after your code is tested and working:
-<prev>
+<pre>
 git checkout main
 git pull origin main
 git merge feature/<your_module_or_task>
-git push origin main </prev>
+git push origin main </pre>
 
 ## 🧼 Best Practices
 ✅ Create a new branch for every task
