@@ -22,9 +22,9 @@ public:
     std::vector<int> getLineNumbers() const;
 
     // Function to list all stored lines on the console
-    void list(ConsoleIO& console);
+    void list();
     //new
-    void clear();
+    void clearMemory();
 
 private:
     int line_counter;  // Counter to generate unique line numbers

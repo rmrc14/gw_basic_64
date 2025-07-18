@@ -30,13 +30,9 @@ std::map<int, std::string> ProgramMemory::getAllLines() const {
 }
 
 // void ProgramMemory::list(gw_basic::IO::ConsoleIO& console) const {
-void ProgramMemory::list(ConsoleIO& console) {
+void ProgramMemory::list() {
     for (const auto& entry : memory) {
-        int lineNumber = entry.first;
-        const std::string& code = entry.second;
-        std::ostringstream oss;
-        oss << lineNumber << " " << code;
-        console.printLine(oss.str().c_str());
+        // print the map content using systeminterface 
     }
 }
 
@@ -49,12 +45,11 @@ std::vector<int> ProgramMemory::getLineNumbers() const {
     return numbers;
 }
 
-void ProgramMemory::clear() {
+void ProgramMemory::clearMemory() {
     memory.clear();
 }
 
-//   } // namespace storage
-//} // namespace gw_basic
+
 
 void ProgramMemory::storeLine(const std::string& line) {
     std::istringstream iss(line);

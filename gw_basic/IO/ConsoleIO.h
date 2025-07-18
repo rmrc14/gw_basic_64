@@ -6,6 +6,8 @@ class ConsoleIO {
 public:
     ConsoleIO();
 
+    bool getLine(std::string& line);
+
     // Reads a full line from the user input (e.g., BASIC command)
     std::string readLine();
 

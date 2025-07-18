@@ -55,7 +55,7 @@ void  SystemInterface::closeFile()
     if (fin.is_open()) fin.close();
 }
 
-bool SystemInterface::readLine(std::string& Line)
+bool SystemInterface::readLineFromFile(std::string& Line)
 {
     if (std::getline(fin, Line)) {
         return true;  // Successfully read a line

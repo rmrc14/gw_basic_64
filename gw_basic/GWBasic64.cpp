@@ -24,7 +24,7 @@ void GWBasic64::loadAndRunFile(const std::string& filename)
 	
 	std::string line;
 
-	while (SystemInterface::readLine(line))// made true if contains string
+	while (SystemInterface::readLineFromFile(line))// made true if contains string
 	{
 		programMemory.storeLine(line);
 	}
@@ -72,7 +72,7 @@ void GWBasic64::runREPL()
 		SystemInterface::printString("Ok\n"); //needs to print first on every iteration
 		SystemInterface::printString("> ");
 
-		if (!cli.getLine(line)) break;
+		if (!cli.getLineFromCli(line)) break;
 		try
 		{
 			if (line.empty()) continue;  //user presses enter twice
@@ -87,7 +87,7 @@ void GWBasic64::runREPL()
 			}
 			else if (line == "LIST")
 			{
-				//programMemory.list(console);
+				programMemory.list();
 			}
 			else if (line == "EXIT")
 			{

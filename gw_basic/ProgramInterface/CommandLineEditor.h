@@ -1,10 +1,4 @@
 #pragma once
-//class CommandLineEditor {
-//public:
- //   CommandLineEditor();
-    //std::string CommandLineEditor::getLine(); todo vijaylaxmi
-
-//};
 
 
 #include <string>
@@ -17,13 +11,11 @@ public:
     CommandLineEditor();
 
     // Captures user input line by line (Windows or custom OS)
-    std::string getLine();
+    bool getLineFromCli(std::string& line);
 
-    // Reads a line of input from a file (e.g., for file-based execution)
-    bool getLine(std::fstream& fin, std::string& line);
 
 private:
-    std::string currentLine;   // Holds the current line of input
+    std::string buffer;   // Holds the current line of input
     size_t cursorPosition;     // Tracks the current position of the cursor in the input
 };
 

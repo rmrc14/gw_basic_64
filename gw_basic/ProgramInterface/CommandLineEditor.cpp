@@ -12,35 +12,37 @@
 
 CommandLineEditor::CommandLineEditor() : cursorPosition(0) {}
 
-std::string CommandLineEditor::getLine() {
-    currentLine.clear();
+bool CommandLineEditor::getLineFromCli(std::string& line) {
+    buffer.clear();
     cursorPosition = 0;
     char c;
 
     while (true) {
-        c = SystemInterface::getChar(); // Get character input from system
+        c = SystemInterface::getChar();  // Get character
 
-        if (c == '\n') break;  // Enter key: End of input
-        // Handle backspace if needed, but without calling handleEditing (excluded)
-        if (c == '\b' && cursorPosition > 0) {  // Backspace: Handle editing
-            currentLine.erase(--cursorPosition, 1);
-            SystemInterface::putChar('\b');  // Move the cursor back and erase character
-            SystemInterface::putChar(' ');   // Overwrite with space
-            SystemInterface::putChar('\b');  // Move back to the cursor
+        if (c == '\n') break;
+
+        // Handle backspace
+        if (c == '\b' && cursorPosition > 0) {
+            buffer.erase(--cursorPosition, 1);
+            SystemInterface::putChar('\b');
+            SystemInterface::putChar(' ');
+            SystemInterface::putChar('\b');
         }
         else {
-            currentLine += c;
-            SystemInterface::putChar(c); // Echo the character
+            buffer += c;
+            ++cursorPosition;
+            SystemInterface::putChar(c); // Echo
         }
     }
-    SystemInterface::putChar('\n');  // Move to new line after input
-    return currentLine;
-}
 
-bool CommandLineEditor::getLine(std::fstream& fin, std::string& line) {
-    if (std::getline(fin, line)) {
-        return true;
-    }
-    return false;
-}
+    SystemInterface::putChar('\n');
 
+    line = buffer;
+
+
+    // vijay laxmi implement the command keys 
+    // Simulate EOF handling if needed (you could check for Ctrl+Z or similar here)
+    // For now, always return true unless you want to add special termination logic.
+    return true;
+}

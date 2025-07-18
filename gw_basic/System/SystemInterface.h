@@ -13,8 +13,9 @@ public:
     // File IO
     static bool openFile(const std::string& filename);
     static void closeFile();
+    static bool readLineFromFile(std::string&);
     // Screen/UI
     static void clearScreen();
     static void moveCursor(int x, int y);
-    static bool readLine(std::string&);
+   
 };
