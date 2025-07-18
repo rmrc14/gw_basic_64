@@ -24,7 +24,7 @@ public:
     // Function to list all stored lines on the console
     void list(ConsoleIO& console);
     //new
-    void ProgramMemory::clear();
+    void clear();
 
 private:
     int line_counter;  // Counter to generate unique line numbers

@@ -30,7 +30,7 @@ std::map<int, std::string> ProgramMemory::getAllLines() const {
 }
 
 // void ProgramMemory::list(gw_basic::IO::ConsoleIO& console) const {
-void ProgramMemory::list(ConsoleIO& console) const {
+void ProgramMemory::list(ConsoleIO& console) {
     for (const auto& entry : memory) {
         int lineNumber = entry.first;
         const std::string& code = entry.second;
@@ -55,3 +55,29 @@ void ProgramMemory::clear() {
 
 //   } // namespace storage
 //} // namespace gw_basic
+
+void ProgramMemory::storeLine(const std::string& line) {
+    std::istringstream iss(line);
+    int lineNumber;
+    std::string code;
+
+    // Read the line number first
+    if (!(iss >> lineNumber)) {
+        throw std::invalid_argument("Missing or invalid line number in input");
+    }
+
+    // Get the rest of the line (code), including spaces
+    std::getline(iss, code);
+
+    // Remove leading spaces from code, if any
+    size_t firstNonSpace = code.find_first_not_of(' ');
+    if (firstNonSpace != std::string::npos) {
+        code = code.substr(firstNonSpace);
+    }
+    else {
+        code.clear(); // Entire string is spaces
+    }
+
+    // Store using the main method
+    storeLine(lineNumber, code);
+}
