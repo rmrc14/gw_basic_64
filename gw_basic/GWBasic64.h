@@ -7,6 +7,8 @@
 #include "Errors/ErrorHandler.h"
 #include "IO/ConsoleIO.h"
 #include "Runtime/StatementExecuter.h"
+#include "ProgramInterface/CommandLineEditor.h"
+#include "System/SystemInterface.h"
 
 #include <string>
 
@@ -21,7 +23,8 @@ private:
     ProgramMemory programMemory;
     ErrorHandler errorHandler;
     ConsoleIO console;
-
+    CommandLineEditor cli;
+    
     // member function
     void executeProgram();
     void executeLine(const std::string& line);

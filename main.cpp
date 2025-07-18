@@ -1,26 +1,29 @@
 #include "gw_basic/GWBasic64.h"
+#include "gw_basic/Lexer/Lexer.h"
 #include <iostream>
 #include<string>
 
-int main(int argc, char* argv[]) 
+int main(int argc, char* argv[])
 {
     //test version 14
     GWBasic64 basic;
-    try 
+    try
     {
-        if (argc > 1) 
+        if (argc > 1)
         {
             basic.loadAndRunFile(argv[1]);  // File mode .bas file is given directly
         }
-        else 
+        else
         {
             basic.runREPL();                // REPL mode READ EVAL PRINT LOOP
         }
     }
-    catch (const std::exception& e) 
+    catch (const std::exception& e)
     {
         std::cerr << "Fatal Error: " << e.what() << std::endl;
     }
+	
+
     return 0;
 }
 

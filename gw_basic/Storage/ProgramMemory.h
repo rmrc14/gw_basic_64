@@ -8,10 +8,11 @@ public:
     std::map<int, std::string> ProgramMemory::getAllLines();
     void ProgramMemory::list(ConsoleIO&);*/
     // ProgramMemory.h*/
+
 #ifndef PROGRAM_MEMORY_H
 #define PROGRAM_MEMORY_H
 
-#include <string>
+
 #include <map>
 
 // Forward declaration of ConsoleIO class
@@ -42,4 +43,5 @@ private:
 };
 
 #endif // PROGRAM_MEMORY_H
+
 

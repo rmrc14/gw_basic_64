@@ -33,10 +33,14 @@
 │   ├── IO/                          ← I/O (optional: file IO, console)
 │   │   ├── ConsoleIO.h              ← Abstracts `PRINT`, `INPUT`
 │   │   ├── ConsoleIO.cpp
+│   │   ├── FileIO.h                      ← Cross-platform file read/write interface
+│   │   ├── FileIO_Windows.cpp           ← Uses <fstream>
+│   │   └── FileIO_MiniOS.cpp            ← Custom I/O
 │
 │   ├── System/                      ← System functions & utilities
 │   │   ├── SystemInterface.h
-│   │   ├── SystemInterface.cpp
+│   │   ├── SystemInterface_Windows.cpp
+│   │   ├── SystemInterface_MiniOS.cpp  //custom OS to be implemented do we need asm?
 │   │   ├── MemoryInterface.h        ← Simulate memory (optional)
 │   │   └── MemoryInterface.cpp
 │
