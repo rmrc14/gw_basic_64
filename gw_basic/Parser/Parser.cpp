@@ -1,16 +1,23 @@
 #include "parser.h"
 #include <stdexcept>
-#include"Lexer.h"
-#include"Token.h"
-#include"ASTNode.h"
+
+AST Parser::parse(const std::vector<Token>& tokens) {
+    tokensPtr = &tokens;
+    pos = 0;
+    return parseProgram();
+}
 
 const Token& Parser::peek() const {
     static Token eof{ TokenType::END_OF_LINE, "", 0 };
-    return pos < tokens.size() ? tokens[pos] : eof;
+    if (pos < tokensPtr->size())
+        return (*tokensPtr)[pos];
+    return eof;
 }
 
 Token Parser::get() {
-    return (pos < tokens.size()) ? tokens[pos++] : peek();
+    if (pos < tokensPtr->size())
+        return (*tokensPtr)[pos++];
+    return peek();
 }
 
 bool Parser::match(TokenType t) {
@@ -33,57 +40,53 @@ AST Parser::parseStatement() {
     if (peek().type == TokenType::Keyword) {
         std::string kw = get().value;
         if (kw == "PRINT") {
-            auto expr = parseExpression();
+            AST expr = parseExpression();
             return std::make_shared<PrintNode>(expr);
         }
         if (kw == "LET") {
             if (peek().type != TokenType::Identifier)
-                throw std::runtime_error("LET requires a variable name");
+                throw std::runtime_error("LET needs a variable name");
             std::string var = get().value;
-            if (!match(TokenType::Symbol) || tokens[pos - 1].value != "=")
+            if (!match(TokenType::Symbol) || (*tokensPtr)[pos - 1].value != "=")
                 throw std::runtime_error("LET missing '='");
-            auto expr = parseExpression();
+            AST expr = parseExpression();
             return std::make_shared<LetNode>(var, expr);
         }
     }
-
-    // Fallback expression-as-statement
     return parseExpression();
 }
 
 AST Parser::parseExpression() {
-    auto node = parseTerm();
+    AST node = parseTerm();
     while (peek().type == TokenType::Symbol &&
         (peek().value == "+" || peek().value == "-")) {
         std::string op = get().value;
-        auto rhs = parseTerm();
+        AST rhs = parseTerm();
         node = std::make_shared<BinOpNode>(op, node, rhs);
     }
     return node;
 }
-
 AST Parser::parseTerm() {
-    auto node = parseFactor();
+    AST node = parseFactor();
     while (peek().type == TokenType::Symbol &&
         (peek().value == "*" || peek().value == "/")) {
         std::string op = get().value;
-        auto rhs = parseFactor();
+        AST rhs = parseFactor();
         node = std::make_shared<BinOpNode>(op, node, rhs);
     }
     return node;
 }
-
 AST Parser::parseFactor() {
     if (match(TokenType::Number)) {
-        return std::make_shared<NumberNode>(tokens[pos - 1].value);
+        return std::make_shared<NumberNode>((*tokensPtr)[pos - 1].value);
     }
     if (match(TokenType::Identifier)) {
-        return std::make_shared<IdentNode>(tokens[pos - 1].value);
+        return std::make_shared<IdentNode>((*tokensPtr)[pos - 1].value);
     }
-    if (match(TokenType::Symbol) && tokens[pos - 1].value == "(") {
-        auto expr = parseExpression();
-        if (!match(TokenType::Symbol) || tokens[pos - 1].value != ")")
-            throw std::runtime_error("Missing ')'");
+    if (match(TokenType::Symbol) && (*tokensPtr)[pos - 1].value == "(") {
+        AST expr = parseExpression();
+        if (!match(TokenType::Symbol) || (*tokensPtr)[pos - 1].value != ")")
+            throw std::runtime_error("Missing closing ')'");
         return expr;
     }
     throw std::runtime_error("Unexpected token '" + peek().value + "'");
