@@ -1,13 +1,12 @@
 #pragma once
-
 #include "ASTNode.h"
 #include "Token.h"
 #include <vector>
 
 class Parser {
 public:
-    Parser() = default;          // default constructor
-    AST parse(const std::vector<Token>& tokens);
+    Parser() {}
+    ASTNode* parse(const std::vector<Token>& tokens);
 
 private:
     const std::vector<Token>* tokensPtr = nullptr;
@@ -15,11 +14,11 @@ private:
 
     const Token& peek() const;
     Token get();
-    bool match(TokenType t);
+    bool match(TokenType);
 
-    AST parseProgram();
-    AST parseStatement();
-    AST parseExpression();
-    AST parseTerm();
-    AST parseFactor();
+    ASTNode* parseProgram();
+    ASTNode* parseStatement();
+    ASTNode* parseExpression();
+    ASTNode* parseTerm();
+    ASTNode* parseFactor();
 };

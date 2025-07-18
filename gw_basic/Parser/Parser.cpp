@@ -1,7 +1,7 @@
 #include "parser.h"
 #include <stdexcept>
 
-AST Parser::parse(const std::vector<Token>& tokens) {
+ASTNode* Parser::parse(const std::vector<Token>& tokens) {
     tokensPtr = &tokens;
     pos = 0;
     return parseProgram();
@@ -28,20 +28,20 @@ bool Parser::match(TokenType t) {
     return false;
 }
 
-AST Parser::parseProgram() {
-    auto program = std::make_shared<ProgramNode>();
+ASTNode* Parser::parseProgram() {
+    auto* program = new ProgramNode();
     while (peek().type != TokenType::END_OF_LINE) {
         program->stmts.push_back(parseStatement());
     }
     return program;
 }
 
-AST Parser::parseStatement() {
+ASTNode* Parser::parseStatement() {
     if (peek().type == TokenType::Keyword) {
         std::string kw = get().value;
         if (kw == "PRINT") {
-            AST expr = parseExpression();
-            return std::make_shared<PrintNode>(expr);
+            ASTNode* expr = parseExpression();
+            return new PrintNode(expr);
         }
         if (kw == "LET") {
             if (peek().type != TokenType::Identifier)
@@ -49,42 +49,44 @@ AST Parser::parseStatement() {
             std::string var = get().value;
             if (!match(TokenType::Symbol) || (*tokensPtr)[pos - 1].value != "=")
                 throw std::runtime_error("LET missing '='");
-            AST expr = parseExpression();
-            return std::make_shared<LetNode>(var, expr);
+            ASTNode* expr = parseExpression();
+            return new LetNode(var, expr);
         }
     }
     return parseExpression();
 }
 
-AST Parser::parseExpression() {
-    AST node = parseTerm();
+ASTNode* Parser::parseExpression() {
+    ASTNode* node = parseTerm();
     while (peek().type == TokenType::Symbol &&
         (peek().value == "+" || peek().value == "-")) {
         std::string op = get().value;
-        AST rhs = parseTerm();
-        node = std::make_shared<BinOpNode>(op, node, rhs);
+        ASTNode* rhs = parseTerm();
+        node = new BinOpNode(op, node, rhs);
     }
     return node;
 }
-AST Parser::parseTerm() {
-    AST node = parseFactor();
+
+ASTNode* Parser::parseTerm() {
+    ASTNode* node = parseFactor();
     while (peek().type == TokenType::Symbol &&
         (peek().value == "*" || peek().value == "/")) {
         std::string op = get().value;
-        AST rhs = parseFactor();
-        node = std::make_shared<BinOpNode>(op, node, rhs);
+        ASTNode* rhs = parseFactor();
+        node = new BinOpNode(op, node, rhs);
     }
     return node;
 }
-AST Parser::parseFactor() {
+
+ASTNode* Parser::parseFactor() {
     if (match(TokenType::Number)) {
-        return std::make_shared<NumberNode>((*tokensPtr)[pos - 1].value);
+        return new NumberNode((*tokensPtr)[pos - 1].value);
     }
     if (match(TokenType::Identifier)) {
-        return std::make_shared<IdentNode>((*tokensPtr)[pos - 1].value);
+        return new IdentNode((*tokensPtr)[pos - 1].value);
     }
     if (match(TokenType::Symbol) && (*tokensPtr)[pos - 1].value == "(") {
-        AST expr = parseExpression();
+        ASTNode* expr = parseExpression();
         if (!match(TokenType::Symbol) || (*tokensPtr)[pos - 1].value != ")")
             throw std::runtime_error("Missing closing ')'");
         return expr;
