@@ -3,7 +3,7 @@
 #include<string>
 #include<vector>
 
-#include "Token.h"
+#include "Lexer/Token.h"
 using namespace std;
 //The Lexer class reads one line of Basiccode and breaks it into tokens
 class Lexer {
