@@ -71,7 +71,7 @@ void GWBasic64::runREPL()
 	{
 		SystemInterface::printString("Ok\n"); //needs to print first on every iteration
 		SystemInterface::printString("> ");
-
+	
 		if (!cli.getLine(line)) break;
 		try
 		{
