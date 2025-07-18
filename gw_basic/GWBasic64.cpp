@@ -9,7 +9,7 @@
 
 // intialising the object using default const.
 GWBasic64::GWBasic64()   
-	:lexer(),parser(),executer(),programMemory(),errorHandler(),console(),cli() {}
+	:lexer(),parser(),executer(),programMemory(),errorHandler(),cli() {}
 
 
 //-----------------   running .bas directly from main()     --------------
@@ -99,7 +99,7 @@ void GWBasic64::runREPL()
 				executeLine(line);
 			}
 		}
-		catch (const std::exception& e)
+		catch(const std::exception& e)
 		{
 			errorHandler.runtimeError(DIRECT_MODE, e.what());
 			break; 

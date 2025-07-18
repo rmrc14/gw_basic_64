@@ -1,3 +1,4 @@
+/*
 #include "ConsoleIO.h"
 #include "SystemInterface.h"
 
@@ -21,3 +22,4 @@ void ConsoleIO::clear() {
 void ConsoleIO::moveCursor(int x, int y) {
     SystemInterface::moveCursor(x, y);
 }
+*/
