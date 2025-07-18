@@ -9,7 +9,7 @@ file(GLOB_RECURSE CORE_SRC_FILES
 )
 
 # Core library (NOT an executable)
-add_library(gw_basic_core STATIC ${CORE_SRC_FILES})
+add_library(gw_basic_core STATIC ${CORE_SRC_FILES} "gw_basic/Lexer/Token.h")
 
 # Include headers
 target_include_directories(gw_basic_core PUBLIC
@@ -25,7 +25,7 @@ target_include_directories(gw_basic_core PUBLIC
 )
 
 # Main executable
-add_executable(gw_basic_64 main.cpp)
+add_executable(gw_basic_64 main.cpp "gw_basic/Lexer/Token.h")
 target_link_libraries(gw_basic_64 PRIVATE gw_basic_core)
 
 # Enable testing and add test subdirectory
