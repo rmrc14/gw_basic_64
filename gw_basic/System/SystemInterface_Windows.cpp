@@ -104,10 +104,12 @@ void  SystemInterface::closeFile()
 
 bool SystemInterface::readLineFromFile(std::string& Line)
 {
-    if (std::getline(fin, Line)) {
+    if (std::getline(fin, Line)) 
+    {
         return true;  // Successfully read a line
     }
-    else {
+    else 
+    {
         return false; // EOF or read error
     }
 }
