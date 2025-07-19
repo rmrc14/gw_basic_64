@@ -13,6 +13,7 @@ int main(int argc, char* argv[])
     {
         if (argc > 1)
         {
+            //todo check whethter its .bas file or not other wise error
             basic.loadAndRunFile(argv[1]);  // File mode .bas file is given directly
         }
         else
