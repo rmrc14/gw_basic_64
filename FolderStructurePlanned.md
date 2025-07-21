@@ -20,16 +20,21 @@
 │   ├── Lexer/                       ← Tokenizer
 │   │   ├── Lexer.h
 │   │   ├── Lexer.cpp
-│
+│   │   └── Token.h                  ← Token structure
 │   ├── Parser/                      ← AST builder
 │   │   ├── Parser.h
 │   │   ├── Parser.cpp
-│
+│   │   └── ASTNode.h                ← AST tree structure
+│   │  
 │   ├── Runtime/                     ← Executor & evaluator
 │   │   ├── StatementExecutor.h
 │   │   ├── StatementExecutor.cpp
-│   │   └── ExpressionEvaluator.h   ← (optional, for parsing math)
-│
+│   │   ├── ExpressionEvaluator.h    ← (optional, for parsing math)
+│   │   ├── ExpressionEvaluator.cpp
+│   │   ├── SymbolTable.h
+│   │   ├── SymbolTable.cpp
+│   │   └── TypeSystem.h             ← Type system (int, string, etc.)
+│   │
 │   ├── IO/                          ← I/O (optional: file IO, console)
 │   │   ├── ConsoleIO.h              ← Abstracts `PRINT`, `INPUT`
 │   │   ├── ConsoleIO.cpp
@@ -41,17 +46,14 @@
 │   │   ├── SystemInterface.h
 │   │   ├── SystemInterface_Windows.cpp
 │   │   ├── SystemInterface_MiniOS.cpp  //custom OS to be implemented do we need asm?
-│   │   ├── MemoryInterface.h        ← Simulate memory (optional)
-│   │   └── MemoryInterface.cpp
 │
 │   ├── Errors/                      ← Error handling
 │   │   ├── ErrorHandler.h
 │   │   └── ErrorHandler.cpp
 │
 │   └── Utils/                       ← Common structs & types
-│       ├── Token.h                  ← Token structure
-│       ├── ASTNode.h                ← AST tree structure
-│       └── Types.h                  ← Type system (int, string, etc.)
+│                       
+│       
 │
 ├── tests/                           ← Unit tests
 │   ├── CMakeLists.txt
