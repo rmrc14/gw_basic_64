@@ -9,7 +9,7 @@
 
 // intialising the object using default const.
 GWBasic64::GWBasic64()   
-	:lexer(),parser(),executor(),programMemory(),errorHandler(),cli() {}
+	:lexer(),parser(),executor(symbolTable),programMemory(),errorHandler(),cli() {}
 
 
 //-----------------   running .bas directly from main()     --------------

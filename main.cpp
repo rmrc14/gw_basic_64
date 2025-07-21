@@ -23,7 +23,9 @@ int main(int argc, char* argv[])
     }
     catch (const std::exception& e)
     {
-        std::cerr << "Fatal Error: " << e.what() << std::endl;
+        SystemInterface::printString("Fatal Error: ");
+        SystemInterface::printString(e.what());
+        SystemInterface::printString("\n");
     }
 	
 

@@ -1,8 +1,6 @@
 #include "ProgramMemory.h"
-#include "IO/ConsoleIO.h"
-#include <algorithm>
-#include <sstream>
-#include <vector>
+//#include "IO/ConsoleIO.h"
+
 
 //namespace gw_basic {
   //  namespace storage {
