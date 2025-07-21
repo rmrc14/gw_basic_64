@@ -93,6 +93,10 @@ void GWBasic64::runREPL()
 			{
 				break;
 			}
+			else if(line=="CLS")
+			{
+				SystemInterface::clearScreen();
+			}
 			else
 			{
 				// happens when user enters w/o lineNo. direct line execution
