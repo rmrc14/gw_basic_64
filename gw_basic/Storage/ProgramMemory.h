@@ -6,9 +6,26 @@
 #include <algorithm>
 #include <sstream>
 #include <vector>
+/*
 
-// Forward declaration of ConsoleIO class
-class ConsoleIO;
+void saveToFile(std::string filename)
+
+bool lineExist(int linenumber)  // gives true if line found in memory
+
+void ProgramMemory::deleteLine(int lineNumber)
+
+std::string getLine(int lineNumber) const;
+
+void ProgramMemory::renumber(int newStart, int oldStart, int increment=10);
+
+
+RENUM                   ' default renumber (from 10, increment 10)
+RENUM 100               ' renumber starting at 100
+RENUM 100, 30           ' renumber lines starting at 100, but only lines from old line 30
+RENUM 100, 30, 5        ' renumber lines starting at 100, from old line 30, with increment 5
+
+
+*/
 
 class ProgramMemory {
 public:

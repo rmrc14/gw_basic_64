@@ -89,17 +89,65 @@ void GWBasic64::runREPL()
 			{
 				programMemory.list();
 			}
-			else if (line == "EXIT")
-			{
-				break;
-			}
-			else if (line=="NEW")
+			else if (line == "NEW")
 			{
 				programMemory.clearMemory();
+			}
+			else if (line._Starts_with("EDIT "))
+			{
+				int ln = std::stoi(line.substr(5));
+				if (!programMemory.lineExist(ln))
+				{
+					SystemInterface::printString("line number does not exist\n");
+					continue;
+				}
+				std::string oldLine = programMemory.getLine(ln);
+				SystemInterface::printString(oldLine.c_str());
+				SystemInterface::printString("\n");
+
+				std::string newLine;
+				cli.getLineFromCli(newLine);
+
+				if (newLine.empty())
+				{
+					programMemory.deleteLine(ln);
+				}
+				else
+				{
+					programMemory.storeLine(newLine);
+				}
+			}
+			else if (line._Starts_with("SAVE ")) // SAVE to file-> SAVE "FILENAME.BAS"
+			{
+				std::string filename = line.substr(5);
+				auto start = filename.find_first_of("\"") ;
+				auto end = filename.find_last_of("\"") ;
+				if (start != std::string::npos && end!=std::string::npos&& end>start)
+				{
+					filename = filename.substr(start+1, end-start-1);
+					programMemory.saveToFile(filename);
+				}
+				else
+				{
+					SystemInterface::printString("syntax error: SAVE \" filename.bas\".bas\n");
+				}
+
+			}
+			else if (line._Starts_with("LOAD ")) //load from file
+			{
+
 			}
 			else if(line=="CLS")
 			{
 				SystemInterface::clearScreen();
+			}
+			else if (line == "CONT")
+			{
+				continue;
+			}
+			else if (line == "EXIT")
+			{
+				break;
 			}
 			else
 			{
