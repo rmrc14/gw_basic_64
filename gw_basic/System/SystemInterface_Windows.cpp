@@ -2,23 +2,70 @@
 #include <iostream>
 #include<fstream>
 #include <string>
+#include<conio.h>
 
 #include "SystemInterface.h"
 
 static std::fstream fin;
 
+
 void SystemInterface::init(){}
+
+/*
+Arrow Up: [0xE0][72]
+F1:       [0][59]
+ UP = 72,          // Arrow Up (after 0 or 0xE0)
+    DOWN = 80,        // Arrow Down
+    LEFT = 75,        // Arrow Left
+    RIGHT = 77,       // Arrow Right
+*/
+check_SKey SystemInterface::readKey()
+{
+    int ch = _getch();
+    if (ch == 0 || ch == 0xE0) // means special key with 2 bytes
+    {
+        int code = _getch();  // second getch gives the special key value
+        switch (code)
+        {
+        case 59: return { true, 0, SpecialKey::F1 }; // 59
+        case 60: return { true, 0, SpecialKey::F2 }; // 60
+        case 61: return { true, 0, SpecialKey::F3 }; //  F3 = 61,
+        case 62: return { true, 0, SpecialKey::F4 }; //  F4 = 62,
+        case 63: return { true, 0, SpecialKey::F5 }; //  F5 = 63,
+        case 64: return { true, 0, SpecialKey::F6 }; //  F6 = 64,
+        case 65: return { true, 0, SpecialKey::F7 }; //  F7 = 65,
+        case 66: return { true, 0, SpecialKey::F8 }; //  F8 = 66,
+        case 67: return { true, 0, SpecialKey::F9 }; //  F9 = 67,
+        case 68: return { true, 0, SpecialKey::F10 };//  F10 = 68,
+             
+          
+        case 72: return { true, 0, SpecialKey::UP };
+        case 80: return { true, 0, SpecialKey::DOWN };
+        case 75: return { true, 0, SpecialKey::LEFT };
+        case 77: return { true, 0, SpecialKey::RIGHT };
+        
+        
+        default: return { true, 0, SpecialKey::NOT_DEFINED_KEY };
+        }
+    }
+    else
+    {
+        if (ch == 27)  return { true, 0, SpecialKey::ESC };
+        if (ch == 3)   return { true, 0, SpecialKey::CTRL_C };
+        if (ch == 26)  return { true, 0, SpecialKey::CTRL_Z };
+        return { false, static_cast<char>(ch), SpecialKey::NOT_DEFINED_KEY };
+    }
+}
+
 
 void SystemInterface::putChar(char c)
 {
     std::cout << c << std::flush;
 }
 
-char SystemInterface::getChar() 
+char SystemInterface::getChar()  // decided to go with keyboard strokes
 {
-    char c;
-    std::cin.get(c);
-    return c;
+    return _getch();
 }
 
 void SystemInterface::printString(const char* str) 
@@ -55,12 +102,14 @@ void  SystemInterface::closeFile()
     if (fin.is_open()) fin.close();
 }
 
-bool SystemInterface::readLine(std::string& Line)
+bool SystemInterface::readLineFromFile(std::string& Line)
 {
-    if (std::getline(fin, Line)) {
+    if (std::getline(fin, Line)) 
+    {
         return true;  // Successfully read a line
     }
-    else {
+    else 
+    {
         return false; // EOF or read error
     }
 }

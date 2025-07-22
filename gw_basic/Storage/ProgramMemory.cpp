@@ -1,58 +1,78 @@
-// ProgramMemory.cpp
-
 #include "ProgramMemory.h"
+#include "IO/ConsoleIO.h"
+#include <algorithm>
 #include <sstream>
-#include <iostream>
+#include <vector>
 
-// Constructor
-ProgramMemory::ProgramMemory() {}
+//namespace gw_basic {
+  //  namespace storage {
 
-// Store a line into memory
-void ProgramMemory::storeLine(const std::string& inputLine) {
-    int lineNumber;
-    std::string code;
+ProgramMemory::ProgramMemory() {
+    // Initialize empty memory
+}
 
-    // Try to parse the input
-    if (!parseLine(inputLine, lineNumber, code)) {
-        std::cerr << "Invalid input line: " << inputLine << "\n";
-        return;
+void ProgramMemory::storeLine(int lineNumber, const std::string& code) {
+    if (lineNumber < 0) {
+        throw std::invalid_argument("Line number cannot be negative");
     }
 
     if (code.empty()) {
-        // If code is empty, delete the line (like in GW-BASIC)
-        programLines.erase(lineNumber);
+        memory.erase(lineNumber);  // Remove line if code is empty
     }
     else {
-        // Otherwise, insert/update the line
-        programLines[lineNumber] = code;
+        memory[lineNumber] = code;  // Add/update line
     }
 }
 
-// Return all stored lines in ascending order
-std::vector<std::string> ProgramMemory::getAllLines() const {
-    std::vector<std::string> lines;
-    for (const auto& [lineNumber, code] : programLines) {
-        lines.push_back(std::to_string(lineNumber) + " " + code);
+//  std::map<int, std::string> ProgramMemory::getAllLines() const {
+std::map<int, std::string> ProgramMemory::getAllLines() const {
+    return memory;  // Return copy of the memory map
+}
+
+// void ProgramMemory::list(gw_basic::IO::ConsoleIO& console) const {
+void ProgramMemory::list() {
+    for (const auto& entry : memory) {
+        // print the map content using systeminterface 
     }
-    return lines;
 }
 
-// Clear all lines from memory
-void ProgramMemory::clear() {
-    programLines.clear();
+
+std::vector<int> ProgramMemory::getLineNumbers() const {
+    std::vector<int> numbers;
+    for (const auto& entry : memory) {
+        numbers.push_back(entry.first);
+    }
+    return numbers;
 }
 
-// Parse an input like "10 PRINT \"HELLO\"" into lineNumber and code
-bool ProgramMemory::parseLine(const std::string& inputLine, int& lineNumber, std::string& code) {
-    std::istringstream iss(inputLine);
+void ProgramMemory::clearMemory() {
+    memory.clear();
+}
+
+
+
+void ProgramMemory::storeLine(const std::string& line) {
+    std::istringstream iss(line);
+    int lineNumber;
+    std::string code;
+
+    // Read the line number first
     if (!(iss >> lineNumber)) {
-        return false;
+        throw std::invalid_argument("Missing or invalid line number in input");
     }
 
+    // Get the rest of the line (code), including spaces
     std::getline(iss, code);
-    if (!code.empty() && code[0] == ' ') {
-        code.erase(0, 1); // Remove leading space
+
+    // Remove leading spaces from code, if any
+    size_t firstNonSpace = code.find_first_not_of(' ');
+    if (firstNonSpace != std::string::npos) {
+        code = code.substr(firstNonSpace);
+    }
+    else {
+        code.clear(); // Entire string is spaces
     }
 
-    return true;
+    // Store using the main method
+    storeLine(lineNumber, code);
 }

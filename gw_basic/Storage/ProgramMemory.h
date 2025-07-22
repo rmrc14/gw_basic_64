@@ -1,37 +1,34 @@
+#ifndef PROGRAM_MEMORY_H
+#define PROGRAM_MEMORY_H
 
-/*class ProgramMemory {
-public:
-    ProgramMemory();
-
-    void storeLine(std::string);//todo magesh
-    /*void ProgramMemory::storeLine(const std::string&);
-    std::map<int, std::string> ProgramMemory::getAllLines();
-    void ProgramMemory::list(ConsoleIO&);*/
-    // ProgramMemory.h*/
-#pragma once
-
-#include <map>
 #include <string>
-#include <vector>
+#include <map>
 
-    class ProgramMemory {
-    public:
-        // Constructor
-        ProgramMemory();
+// Forward declaration of ConsoleIO class
+class ConsoleIO;
 
-        // Store a line in memory (like entering "10 PRINT \"HELLO\"")
-        void storeLine(const std::string& inputLine);
+class ProgramMemory {
+public:
+    ProgramMemory(); // Constructor
 
-        // Return all stored lines in order for listing or saving
-        std::vector<std::string> getAllLines() const;
+    void storeLine(int lineNumber, const std::string& code);
 
-        // Clear all stored program lines
-        void clear();
+    // Function to store a line in memory
+    void storeLine(const std::string& line);
 
-    private:
-        std::map<int, std::string> programLines;
+    // Function to get all lines stored in memory
+    std::map<int, std::string> getAllLines() const;
 
-        // Helper: parse a line like "10 PRINT \"HELLO\"" into {lineNumber, code}
-        bool parseLine(const std::string& inputLine, int& lineNumber, std::string& code);
-    };
+    std::vector<int> getLineNumbers() const;
 
+    // Function to list all stored lines on the console
+    void list();
+    //new
+    void clearMemory();
+
+private:
+    int line_counter;  // Counter to generate unique line numbers
+    std::map<int, std::string> memory;  // Map to store lines with their corresponding line numbers
+};
+
+#endif // PROGRAM_MEMORY_H

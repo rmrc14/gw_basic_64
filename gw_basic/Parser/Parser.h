@@ -1,8 +1,24 @@
 #pragma once
+#include "ASTNode.h"
+#include "Token.h"
+#include <vector>
 
 class Parser {
 public:
-    Parser();
-    // TODO: Implement Parser vaishnavi
-//ASTNode Parser::parse(const std::vector<Token>&);   // returns ast node to be transferred
+    Parser() {}
+    ASTNode* parse(const std::vector<Token>& tokens);
+
+private:
+    const std::vector<Token>* tokensPtr = nullptr;
+    size_t pos = 0;
+
+    const Token& peek() const;
+    Token get();
+    bool match(TokenType);
+
+    ASTNode* parseProgram();
+    ASTNode* parseStatement();
+    ASTNode* parseExpression();
+    ASTNode* parseTerm();
+    ASTNode* parseFactor();
 };

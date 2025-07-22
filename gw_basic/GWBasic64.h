@@ -22,7 +22,7 @@ private:
     StatementExecuter executer;
     ProgramMemory programMemory;
     ErrorHandler errorHandler;
-    ConsoleIO console;
+   // ConsoleIO console;
     CommandLineEditor cli;
     
     // member function

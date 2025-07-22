@@ -9,7 +9,7 @@ file(GLOB_RECURSE CORE_SRC_FILES
 )
 
 # Core library (NOT an executable)
-add_library(gw_basic_core STATIC ${CORE_SRC_FILES} "gw_basic/Lexer/Token.h")
+add_library(gw_basic_core STATIC ${CORE_SRC_FILES} )
 
 # Include headers
 target_include_directories(gw_basic_core PUBLIC
