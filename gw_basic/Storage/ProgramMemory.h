@@ -23,8 +23,16 @@ public:
 
     // Function to list all stored lines on the console
     void list();
+    void list(ConsoleIO& console) const;
     //new
     void clearMemory();
+
+
+    //  NEW: File load/save(21/07/2025)newly added
+    bool loadFromFile(const std::string& path);
+    bool saveToFile(const std::string& path) const;
+   // void storeLineFromFile(const std::string& line);
+
 
 private:
     int line_counter;  // Counter to generate unique line numbers
@@ -32,3 +40,5 @@ private:
 };
 
 #endif // PROGRAM_MEMORY_H
+
+
