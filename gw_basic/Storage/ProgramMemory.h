@@ -3,6 +3,9 @@
 
 #include <string>
 #include <map>
+#include <algorithm>
+#include <sstream>
+#include <vector>
 
 // Forward declaration of ConsoleIO class
 class ConsoleIO;

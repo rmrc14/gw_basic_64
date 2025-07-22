@@ -4,7 +4,7 @@
 #include <string>
 #include <fstream>
 #include "SystemInterface.h"
-#include "GWBasic64.h"
+
 
 class CommandLineEditor {
 public:

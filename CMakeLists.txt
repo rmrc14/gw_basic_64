@@ -3,15 +3,29 @@ project(GWBasic64)
 
 set(CMAKE_CXX_STANDARD 17)
 
-# Core interpreter source files
+# Core interpreter source files (excluding platform system interface)
 file(GLOB_RECURSE CORE_SRC_FILES
     gw_basic/*.cpp
 )
+list(REMOVE_ITEM CORE_SRC_FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/gw_basic/System/SystemInterface_Windows.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/gw_basic/System/SystemInterface_MiniOS.cpp
+)
 
-# Core library (NOT an executable)
-add_library(gw_basic_core STATIC ${CORE_SRC_FILES} )
+# Choose platform-specific system interface
+if(WIN32)
+    set(PLATFORM_SYSTEM_SRC gw_basic/System/SystemInterface_Windows.cpp)
+else()
+    set(PLATFORM_SYSTEM_SRC gw_basic/System/SystemInterface_MiniOS.cpp)
+endif()
 
-# Include headers
+# Create static library
+add_library(gw_basic_core STATIC
+    ${CORE_SRC_FILES}
+    ${PLATFORM_SYSTEM_SRC}
+)
+
+# Public includes
 target_include_directories(gw_basic_core PUBLIC
     gw_basic
     gw_basic/ProgramInterface
@@ -25,9 +39,14 @@ target_include_directories(gw_basic_core PUBLIC
 )
 
 # Main executable
-add_executable(gw_basic_64 main.cpp "gw_basic/Lexer/Token.h")
+add_executable(gw_basic_64 main.cpp)
 target_link_libraries(gw_basic_64 PRIVATE gw_basic_core)
 
-# Enable testing and add test subdirectory
+# Enable tests
 enable_testing()
 add_subdirectory(tests)
+
+
+#target_include_directories(run_tests PRIVATE
+#    ${PROJECT_SOURCE_DIR}/gw_basic
+#)

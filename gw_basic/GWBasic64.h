@@ -6,7 +6,7 @@
 #include "Storage/ProgramMemory.h"
 #include "Errors/ErrorHandler.h"
 #include "IO/ConsoleIO.h"
-#include "Runtime/StatementExecuter.h"
+#include "Runtime/StatementExecutor.h"
 #include "ProgramInterface/CommandLineEditor.h"
 #include "System/SystemInterface.h"
 
@@ -19,12 +19,12 @@ private:
     //module objects instantiation
     Lexer lexer;
     Parser parser;
-    StatementExecuter executer;
+    StatementExecutor executor;
     ProgramMemory programMemory;
     ErrorHandler errorHandler;
    // ConsoleIO console;
     CommandLineEditor cli;
-    
+    SymbolTable symbolTable;
     // member function
     void executeProgram();
     void executeLine(const std::string& line);

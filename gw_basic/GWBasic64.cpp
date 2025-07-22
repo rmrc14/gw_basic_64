@@ -9,7 +9,7 @@
 
 // intialising the object using default const.
 GWBasic64::GWBasic64()   
-	:lexer(),parser(),executer(),programMemory(),errorHandler(),cli() {}
+	:lexer(),parser(),executor(symbolTable),programMemory(),errorHandler(),cli() {}
 
 
 //-----------------   running .bas directly from main()     --------------
@@ -46,7 +46,7 @@ void GWBasic64::executeProgram()
 		{
 			auto tokens = lexer.tokenize(line);     //calls lexer to tokenize using enum
 			auto ast = parser.parse(tokens);
-			executer.execute(ast);
+			executor.execute(ast);
 		}
 		catch (const std::exception& e)
 		{
@@ -93,6 +93,10 @@ void GWBasic64::runREPL()
 			{
 				break;
 			}
+			else if(line=="CLS")
+			{
+				SystemInterface::clearScreen();
+			}
 			else
 			{
 				// happens when user enters w/o lineNo. direct line execution
@@ -115,7 +119,7 @@ void  GWBasic64::executeLine(const std::string& line)
 
 	auto tokens = lexer.tokenize(line);     //calls lexer to tokenize using enum
 	auto ast = parser.parse(tokens);
-	executer.execute(ast);
+	executor.execute(ast);
 
 
 }
