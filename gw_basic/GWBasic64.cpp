@@ -93,6 +93,10 @@ void GWBasic64::runREPL()
 			{
 				break;
 			}
+			else if (line=="NEW")
+			{
+				programMemory.clearMemory();
+			}
 			else if(line=="CLS")
 			{
 				SystemInterface::clearScreen();
@@ -106,7 +110,7 @@ void GWBasic64::runREPL()
 		catch(const std::exception& e)
 		{
 			errorHandler.runtimeError(DIRECT_MODE, e.what());
-			break; 
+			//break; 
 
 		}
 	}

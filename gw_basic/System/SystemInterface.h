@@ -1,4 +1,7 @@
 #pragma once
+#include<string>
+#include<vector>
+
 enum class SpecialKey
 {
     UP, DOWN, LEFT, RIGHT,
@@ -34,8 +37,10 @@ public:
     static bool openFile(const std::string& filename);
     static void closeFile();
     static bool readLineFromFile(std::string&);
+    static void createAndSaveFile(const std::string& path, const std::vector<std::string>& lines);
     // Screen/UI
     static void clearScreen();
     static void moveCursor(int x, int y);
    
+
 };
