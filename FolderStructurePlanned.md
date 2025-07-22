@@ -7,16 +7,16 @@
 ├── gw_basic/                         ← Core interpreter modules
 │   ├── GWBasic64.h                   ← Main interpreter class
 │   ├── GWBasic64.cpp
-│
+│   │
 │   ├── ProgramInterface/            ← REPL, screen rendering, input
 │   │   ├── CommandLineEditor.h
 │   │   ├── CommandLineEditor.cpp
 │   │   └── SpecialKeyHandler.h      ← (optional advanced REPL keys)
-│
+│   │
 │   ├── Storage/                     ← Stores program lines, line editing
 │   │   ├── ProgramMemory.h
 │   │   ├── ProgramMemory.cpp
-│
+│   │
 │   ├── Lexer/                       ← Tokenizer
 │   │   ├── Lexer.h
 │   │   ├── Lexer.cpp
@@ -41,16 +41,16 @@
 │   │   ├── FileIO.h                      ← Cross-platform file read/write interface
 │   │   ├── FileIO_Windows.cpp           ← Uses <fstream>
 │   │   └── FileIO_MiniOS.cpp            ← Custom I/O
-│
+│   │
 │   ├── System/                      ← System functions & utilities
 │   │   ├── SystemInterface.h
 │   │   ├── SystemInterface_Windows.cpp
 │   │   ├── SystemInterface_MiniOS.cpp  //custom OS to be implemented do we need asm?
-│
+│   │
 │   ├── Errors/                      ← Error handling
 │   │   ├── ErrorHandler.h
 │   │   └── ErrorHandler.cpp
-│
+│   
 │   └── Utils/                       ← Common structs & types
 │                       
 │       
