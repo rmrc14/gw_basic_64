@@ -1,14 +1,6 @@
-#ifndef PROGRAM_MEMORY_H
-#define PROGRAM_MEMORY_H
 
-#include <string>
-#include <map>
-#include <algorithm>
-#include <sstream>
-#include <vector>
-/*
 
-void saveToFile(std::string filename)
+/*void saveToFile(std::string filename)
 
 bool lineExist(int linenumber)  // gives true if line found in memory
 
@@ -31,28 +23,61 @@ RENUM 100, 30, 5        ' renumber lines starting at 100, from old line 30, with
 
 */
 
+
+#ifndef PROGRAM_MEMORY_H
+#define PROGRAM_MEMORY_H
+
+#include <string>
+#include <map>
+#include <vector>
+
+class ConsoleIO; // Forward declaration if needed
+class SystemInterface; // Forward declaration if needed
+
 class ProgramMemory {
 public:
-    ProgramMemory(); // Constructor
+    ProgramMemory();
 
+    // Store a line by number and code
     void storeLine(int lineNumber, const std::string& code);
 
-    // Function to store a line in memory
+    // Store a line like "10 PRINT HELLO"
     void storeLine(const std::string& line);
 
-    // Function to get all lines stored in memory
+    // Get a copy of all stored lines
     std::map<int, std::string> getAllLines() const;
 
-    std::vector<int> getLineNumbers() const;
+    // Get just the line numbers
+   // std::vector<int> getLineNumbers() const;
 
-    // Function to list all stored lines on the console
-    void list();
-    //new
+    std::vector<std::string> getLineNumbers() const;
+
+
+    // List all lines using system output
+    void list() const;
+
+    // Clear memory
     void clearMemory();
 
+    // File I/O
+    bool loadFromFile(const std::string& path);
+    bool saveToFile(const std::string& path) const;
+
+    // Utilities
+    bool lineExist(int lineNumber) const;
+    void deleteLine(int lineNumber);
+    std::string getLine(int lineNumber) const;
+
+    // Renumber lines
+    void renumber(int newStart = 10, int oldStart = 0, int increment = 10);
+
+
 private:
-    int line_counter;  // Counter to generate unique line numbers
-    std::map<int, std::string> memory;  // Map to store lines with their corresponding line numbers
+    int line_counter = 0;  // Unused currently, can be used for auto-numbering
+    std::map<int, std::string> memory;
 };
 
 #endif // PROGRAM_MEMORY_H
+
+
+
