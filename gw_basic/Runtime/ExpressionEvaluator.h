@@ -1,10 +1,3 @@
-/*#pragma once
-
-class ExpressionEvaluator {
-public:
-    ExpressionEvaluator();
-};
-*/
 
 #pragma once
 #include <string>
