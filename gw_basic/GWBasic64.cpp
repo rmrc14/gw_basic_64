@@ -108,7 +108,7 @@ void GWBasic64::runREPL()
 				std::string newLine;
 				cli.getLineFromCli(newLine);
 
-				if (newLine.empty())
+				if (newLine.empty())  // if user presses enter 2 times the line is deleted
 				{
 					programMemory.deleteLine(ln);
 				}
@@ -124,7 +124,7 @@ void GWBasic64::runREPL()
 				auto end = filename.find_last_of("\"") ;
 				if (start != std::string::npos && end!=std::string::npos&& end>start)
 				{
-					filename = filename.substr(start+1, end-start-1);
+					filename = filename.substr(start+1, end-start-1); //start and length for substr
 					programMemory.saveToFile(filename);
 				}
 				else
@@ -134,6 +134,26 @@ void GWBasic64::runREPL()
 
 			}
 			else if (line._Starts_with("LOAD ")) //load from file
+			{
+				std::string filename =line.substr(5);
+				auto start = filename.find_first_of("\"");
+				auto end = filename.find_last_of("\"");
+				if (start != std::string::npos && end != std::string::npos && end > start)
+				{
+					filename = filename.substr(start + 1, end - start - 1); //start and length for substr
+					loadAndRunFile(filename);
+
+				}
+				else
+				{
+					SystemInterface::printString("syntax error: SAVE \" filename.bas\".bas\n");
+				}
+			}
+			else if (line=="DELETE ")
+			{
+
+			}
+			else if (line == "AUTO")
 			{
 
 			}

@@ -12,7 +12,11 @@ void saveToFile(std::string filename)
 
 bool lineExist(int linenumber)  // gives true if line found in memory
 
-void ProgramMemory::deleteLine(int lineNumber)
+void ProgramMemory::deleteLine(int lineNumber ,int secondline number)
+DELETE 100         ' Deletes line 100
+DELETE 100,200     ' Deletes lines 100 through 200 (inclusive)
+
+
 
 std::string getLine(int lineNumber) const;
 
