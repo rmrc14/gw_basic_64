@@ -149,11 +149,32 @@ void GWBasic64::runREPL()
 					SystemInterface::printString("syntax error: SAVE \" filename.bas\".bas\n");
 				}
 			}
-			else if (line=="DELETE ")
+			else if (line._Starts_with("DELETE "))
+			{
+				std::string arguments = line.substr(7); //rest of the line is stored
+				auto findCommaPos = line.find(',');
+
+				if (findCommaPos == std::string::npos)  // no comma means only one line number
+				{
+					int ln = std::stoi(arguments);
+					programMemory.deleteLine(ln);
+				}
+				else    // 2 line number
+				{
+					int startLineNum = std::stoi(arguments.substr(0, findCommaPos));
+					int endLineNum = std::stoi(arguments.substr(findCommaPos + 1));
+
+					for (int ln = startLineNum; ln <= endLineNum;ln++)
+					{
+						programMemory.deleteLine(ln);
+					}
+				}
+			}
+			else if (line._Starts_with("AUTO "))
 			{
 
 			}
-			else if (line == "AUTO")
+			else if (line._Starts_with("RENUMBER "))
 			{
 
 			}
