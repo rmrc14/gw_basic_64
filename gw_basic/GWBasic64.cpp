@@ -1,4 +1,4 @@
-#include "GWBasic64.h"
+﻿#include "GWBasic64.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -67,31 +67,46 @@ void GWBasic64::runREPL()
 	// RUN LIST NEW  every newline OK  and > 
 	// cmd-> 1 LIST 2 NEW 3 LOAD" 4 SAVE" 5 CONT<- 6 LPT1 7 TRON 8 TROFF 9 KEY 0 SCREEN
 	std::string line;
+
+	//for auto mode
+	bool automode = false;
+	int currentAutoLine = 10;
+	int autoIncrement = 10;
+
+	SystemInterface::printString("Ok\n"); //needs to print first on every iteration
 	while (true)
 	{
-		SystemInterface::printString("Ok\n"); //needs to print first on every iteration
+		
 		SystemInterface::printString("> ");
 
 		if (!cli.getLineFromCli(line)) break;
 		try
 		{
-			if (line.empty()) continue;  //user presses enter twice
+			if (line.empty())
+			{
+				SystemInterface::printString("Ok\n");
+				continue;  //user presses enter twice
+			}
 			
 			if (isdigit(line[0]))
 			{
 				programMemory.storeLine(line);  //stores in memory
+				
 			}
 			else if (line=="RUN")
 			{
 				executeProgram();  //just calls directly as already stored in memory
+				SystemInterface::printString("Ok\n");
 			}
 			else if (line == "LIST")
 			{
 				programMemory.list();
+				SystemInterface::printString("Ok\n");
 			}
 			else if (line == "NEW")
 			{
 				programMemory.clearMemory();
+				SystemInterface::printString("Ok\n");
 			}
 			else if (line._Starts_with("EDIT "))
 			{
@@ -116,6 +131,7 @@ void GWBasic64::runREPL()
 				{
 					programMemory.storeLine(newLine);
 				}
+				SystemInterface::printString("Ok\n");
 			}
 			else if (line._Starts_with("SAVE ")) // SAVE to file-> SAVE "FILENAME.BAS"
 			{
@@ -131,6 +147,7 @@ void GWBasic64::runREPL()
 				{
 					SystemInterface::printString("syntax error: SAVE \" filename.bas\".bas\n");
 				}
+				SystemInterface::printString("Ok\n");
 
 			}
 			else if (line._Starts_with("LOAD ")) //load from file
@@ -146,8 +163,9 @@ void GWBasic64::runREPL()
 				}
 				else
 				{
-					SystemInterface::printString("syntax error: SAVE \" filename.bas\".bas\n");
+					SystemInterface::printString("syntax error: LOAD \" filename.bas\".bas\n");
 				}
+				SystemInterface::printString("Ok\n");
 			}
 			else if (line._Starts_with("DELETE "))
 			{
@@ -169,18 +187,42 @@ void GWBasic64::runREPL()
 						programMemory.deleteLine(ln);
 					}
 				}
+				SystemInterface::printString("Ok\n");
 			}
 			else if (line._Starts_with("AUTO "))
 			{
+				//AUTO             → start at 10, increment by 10
+				//AUTO 100         → start at 100, increment 10
+				//AUTO 100, 20     → start at 100, increment by 20
+
 
 			}
 			else if (line._Starts_with("RENUMBER "))
 			{
+				//(int newStart = 10, int oldStart = 0, int increment = 10
+				//RENUMBER 100,200,5  — renumber from 200 as 100, 105, 
+				//RENUMBER — defaults to 10,0,10
+				//RENUMBER 100,200 — renumber lines from 200 with start=100
+				std::istringstream iss(line.substr(9));  // Skip "RENUMBER "
+				std::string token;
+				int newStart = 10, oldStart = 0, increment = 10;
+
+				if (std::getline(iss, token, ',')) 
+					newStart = std::stoi(token);
+				if (std::getline(iss, token, ',')) 
+					oldStart = std::stoi(token);
+				if (std::getline(iss, token, ',')) 
+					increment = std::stoi(token);
+				
+				programMemory.renumber(newStart, oldStart, increment);
+				SystemInterface::printString("Ok\n");
+
 
 			}
 			else if(line=="CLS")
 			{
 				SystemInterface::clearScreen();
+				SystemInterface::printString("Ok\n");
 			}
 			else if (line == "CONT")
 			{
@@ -194,7 +236,10 @@ void GWBasic64::runREPL()
 			{
 				// happens when user enters w/o lineNo. direct line execution
 				executeLine(line);
+				SystemInterface::printString("Ok\n");
 			}
+
+
 		}
 		catch(const std::exception& e)
 		{
@@ -216,3 +261,4 @@ void  GWBasic64::executeLine(const std::string& line)
 
 
 }
+
