@@ -1,4 +1,6 @@
 #pragma once
+
+
 enum class SpecialKey
 {
     UP, DOWN, LEFT, RIGHT,
@@ -20,7 +22,7 @@ struct check_SKey
 
 
 class SystemInterface {
-    
+
 public:
     // Setup
     static void init();
@@ -37,5 +39,11 @@ public:
     // Screen/UI
     static void clearScreen();
     static void moveCursor(int x, int y);
-   
+
 };
+
+/////////////////////////////
+
+
+
+
