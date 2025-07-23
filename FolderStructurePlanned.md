@@ -7,51 +7,53 @@
 ├── gw_basic/                         ← Core interpreter modules
 │   ├── GWBasic64.h                   ← Main interpreter class
 │   ├── GWBasic64.cpp
-│
+│   │
 │   ├── ProgramInterface/            ← REPL, screen rendering, input
 │   │   ├── CommandLineEditor.h
 │   │   ├── CommandLineEditor.cpp
 │   │   └── SpecialKeyHandler.h      ← (optional advanced REPL keys)
-│
+│   │
 │   ├── Storage/                     ← Stores program lines, line editing
 │   │   ├── ProgramMemory.h
 │   │   ├── ProgramMemory.cpp
-│
+│   │
 │   ├── Lexer/                       ← Tokenizer
 │   │   ├── Lexer.h
 │   │   ├── Lexer.cpp
-│
+│   │   └── Token.h                  ← Token structure
 │   ├── Parser/                      ← AST builder
 │   │   ├── Parser.h
 │   │   ├── Parser.cpp
-│
+│   │   └── ASTNode.h                ← AST tree structure
+│   │  
 │   ├── Runtime/                     ← Executor & evaluator
 │   │   ├── StatementExecutor.h
 │   │   ├── StatementExecutor.cpp
-│   │   └── ExpressionEvaluator.h   ← (optional, for parsing math)
-│
+│   │   ├── ExpressionEvaluator.h    ← (optional, for parsing math)
+│   │   ├── ExpressionEvaluator.cpp
+│   │   ├── SymbolTable.h
+│   │   ├── SymbolTable.cpp
+│   │   └── TypeSystem.h             ← Type system (int, string, etc.)
+│   │
 │   ├── IO/                          ← I/O (optional: file IO, console)
 │   │   ├── ConsoleIO.h              ← Abstracts `PRINT`, `INPUT`
 │   │   ├── ConsoleIO.cpp
 │   │   ├── FileIO.h                      ← Cross-platform file read/write interface
 │   │   ├── FileIO_Windows.cpp           ← Uses <fstream>
 │   │   └── FileIO_MiniOS.cpp            ← Custom I/O
-│
+│   │
 │   ├── System/                      ← System functions & utilities
 │   │   ├── SystemInterface.h
 │   │   ├── SystemInterface_Windows.cpp
 │   │   ├── SystemInterface_MiniOS.cpp  //custom OS to be implemented do we need asm?
-│   │   ├── MemoryInterface.h        ← Simulate memory (optional)
-│   │   └── MemoryInterface.cpp
-│
+│   │
 │   ├── Errors/                      ← Error handling
 │   │   ├── ErrorHandler.h
 │   │   └── ErrorHandler.cpp
-│
+│   
 │   └── Utils/                       ← Common structs & types
-│       ├── Token.h                  ← Token structure
-│       ├── ASTNode.h                ← AST tree structure
-│       └── Types.h                  ← Type system (int, string, etc.)
+│                       
+│       
 │
 ├── tests/                           ← Unit tests
 │   ├── CMakeLists.txt
