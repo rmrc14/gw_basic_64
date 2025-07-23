@@ -2,7 +2,8 @@
 #define __ERROR__
 
 #include<iostream>
-
+#include<string>
+#include "System/SystemInterface.h"
 
 class ErrorHandler {
 public:

@@ -1,5 +1,6 @@
 #pragma once
-
+#include<string>
+#include<vector>
 
 enum class SpecialKey
 {
@@ -22,7 +23,7 @@ struct check_SKey
 
 
 class SystemInterface {
-
+    
 public:
     // Setup
     static void init();
@@ -36,14 +37,17 @@ public:
     static bool openFile(const std::string& filename);
     static void closeFile();
     static bool readLineFromFile(std::string&);
+    static void createAndSaveFile(const std::string& path, const std::vector<std::string>& lines);
     // Screen/UI
     static void clearScreen();
     static void moveCursor(int x, int y);
 
+    // Dynamic Memory management ---->  New / Delete 
+ 
+    //template<class T ,class... Args>  // New
+    //static T* sysNew(Args&&... args);
+
+    //template<class T>  //delete
+    //static void sysDelete(T* ptr);
+   
 };
-
-/////////////////////////////
-
-
-
-

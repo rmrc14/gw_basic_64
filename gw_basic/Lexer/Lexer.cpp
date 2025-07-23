@@ -108,7 +108,7 @@ Token Lexer::extractNumber() {
 	while (!isAtEnd()) {
 		if (std::isspace(getCurrentChar())) {
 			skipSpaces();
-			continue; // ? Now it's inside the loop, so no error
+			continue; //  Now it's inside the loop, so no error
 		}
 
 		// Proceed to extract token (number, keyword, operator, etc.)
@@ -230,4 +230,5 @@ std::string Lexer::toUpper(const std::string& s) {
 	std::transform(result.begin(), result.end(), result.begin(), ::toupper);
 	return result;
 }
+
 

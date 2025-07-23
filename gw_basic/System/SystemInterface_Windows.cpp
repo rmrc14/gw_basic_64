@@ -6,7 +6,14 @@
 
 #include "SystemInterface.h"
 
-static std::fstream fin;
+// DOS/Windows special key prefix
+#define SPECIAL_KEY_BYTES_PREFIX_1 0x00 // NULL for the esc,function keys,etc
+#define SPECIAL_KEY_BYTES_PREFIX_2 0xE0 // Extended key prefix (arrow key etc)
+
+
+
+
+static std::fstream fin,fio;
 
 
 void SystemInterface::init(){}
@@ -22,7 +29,9 @@ F1:       [0][59]
 check_SKey SystemInterface::readKey()
 {
     int ch = _getch();
-    if (ch == 0 || ch == 0xE0) // means special key with 2 bytes
+
+    // means special key with 2 bytes
+    if (ch == SPECIAL_KEY_BYTES_PREFIX_1 || ch == SPECIAL_KEY_BYTES_PREFIX_2) 
     {
         int code = _getch();  // second getch gives the special key value
         switch (code)
@@ -113,3 +122,21 @@ bool SystemInterface::readLineFromFile(std::string& Line)
         return false; // EOF or read error
     }
 }
+
+
+// file handling module for memory
+void SystemInterface::createAndSaveFile(const std::string& path, const std::vector<std::string>& lines)
+{
+    fio.open(path,std::ios::out);
+    if (!fio.is_open())
+    {
+        throw std::runtime_error("unable to open file: " + path);
+    }
+    for (const auto& l : lines)
+    {
+        fio<<l<<"\n";
+    }
+
+    fio.close();
+}
+    
