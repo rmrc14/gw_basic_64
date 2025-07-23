@@ -28,7 +28,11 @@ std::vector<Token> Lexer::tokenize(const std::string& line) {
 	currentIndex = 0;
 	std::vector<Token>tokens;
 
-	skipSpaces();
+	if (std::isspace(getCurrentChar())) {
+		skipSpaces();
+
+	}
+
 	//Line number validation
 	if (std::isdigit(getCurrentChar())) {
 		unsigned int lineStart = currentIndex;
@@ -89,26 +93,53 @@ char Lexer::moveToNextChar() {
 	return(currentIndex < inputLine.size()) ? inputLine[currentIndex++] : '\0';
 
 }
+bool Lexer::isAtEnd() const {
+	return currentIndex >= inputLine.length();
+}
+
 //extract a anumber token(like 10,20)
+
 Token Lexer::extractNumber() {
 	unsigned int start = currentIndex;
 	std::string num;
-	bool hasPoint = false;//to check float
-	while (std::isdigit(getCurrentChar()) ||
-		getCurrentChar() == '.' ||
-		getCurrentChar() == 'E' ||
-		getCurrentChar() == '+' ||
-		getCurrentChar() == '-') {
-		char ch = getCurrentChar();
-		if (ch == '.') {
-			if (hasPoint)
-				break;//only one dot allowed
-			hasPoint = true;
+	bool hasPoint = false;
+	bool hasExponent = false;
+
+	while (!isAtEnd()) {
+		if (std::isspace(getCurrentChar())) {
+			skipSpaces();
+			continue; //  Now it's inside the loop, so no error
 		}
-		num += moveToNextChar();
+
+		// Proceed to extract token (number, keyword, operator, etc.)
+
+
+
+		if (std::isdigit(getCurrentChar())) {
+			num += moveToNextChar();
+		}
+		else if (getCurrentChar() == '.') {
+			if (hasPoint) break;
+			hasPoint = true;
+			num += moveToNextChar();
+		}
+		else if (getCurrentChar() == 'E' || getCurrentChar() == 'e') {
+			if (hasExponent) break;
+			hasExponent = true;
+			num += moveToNextChar();
+			// handle optional + or -
+			if (getCurrentChar() == '+' || getCurrentChar() == '-') {
+				num += moveToNextChar();
+			}
+		}
+		else {
+			break;
+		}
 	}
+
 	return Token(TokenType::Number, num, start);
 }
+
 //Extracts either a keyword(like print) or identifier(like A$)
 Token Lexer::extractWordOrKeyword() {
 	unsigned int start = currentIndex;
@@ -169,7 +200,7 @@ Token Lexer::extractOperatororSymbol() {
 	}
 	std::string single(1, c);
 	if (single == "," || single == ":" || single == ";") {
-		return Token(TokenType::Seperator, single, start);
+		return Token(TokenType::Separator, single, start);
 	}
 	else if (std::string("+-=*/^<>()").find(c) != std::string::npos) {
 		return Token(TokenType::Operator, single, start);

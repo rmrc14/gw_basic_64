@@ -10,7 +10,7 @@ enum class TokenType { //different types of token in GWBASICS
 	Comment,
 	END_OF_LINE,
 	Operator,//to classify math or logical operator
-	Seperator,//for seperating comma,colon etc.
+	Separator,//for seperating comma,colon etc.
 	Invalid
 };
 struct Token {

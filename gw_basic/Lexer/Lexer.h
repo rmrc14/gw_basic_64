@@ -20,6 +20,7 @@ private:
 	void skipSpaces();
 	char getCurrentChar() const;
 	char moveToNextChar();
+	bool isAtEnd() const;
 	//These function read specific parts of line and return tokens
 	Token extractNumber();
 	Token extractWordOrKeyword();
