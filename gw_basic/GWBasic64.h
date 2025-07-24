@@ -22,13 +22,14 @@ private:
     StatementExecutor executor;
     ProgramMemory programMemory;
     ErrorHandler errorHandler;
-    // ConsoleIO console;
     CommandLineEditor cli;
     SymbolTable symbolTable;
+
     // member function
     void executeProgram();
     void executeLine(const std::string& line);
 
+  
 public:
     GWBasic64();
 

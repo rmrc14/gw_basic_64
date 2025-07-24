@@ -38,3 +38,13 @@ void ErrorHandler::syntaxError(int linNo, const std::string& msg)
         SystemInterface::printString(errorMsg.c_str());
     }
 }
+
+void ErrorHandler::typeError(int line, const std::string& msg) {
+    std::string errorMsg = "[Type Error] line " + std::to_string(line) + " : " + msg;
+    SystemInterface::printString(errorMsg.c_str());
+}
+
+void ErrorHandler::systemError(const std::string& msg) {
+    std::string errorMsg = "[System Error] : " + msg;
+    SystemInterface::printString(errorMsg.c_str());
+}

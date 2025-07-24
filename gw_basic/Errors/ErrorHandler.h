@@ -12,6 +12,8 @@ public:
     //errors
     void syntaxError(int line, const std::string& msg);
     void runtimeError(int, const std::string&); 
+    void typeError(int, const std::string&);
+    void systemError(const std::string&);
 };
 
 #endif
