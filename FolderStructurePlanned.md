@@ -35,12 +35,6 @@
 │   │   ├── SymbolTable.cpp
 │   │   └── TypeSystem.h             ← Type system (int, string, etc.)
 │   │
-│   ├── IO/                          ← I/O (optional: file IO, console)
-│   │   ├── ConsoleIO.h              ← Abstracts `PRINT`, `INPUT`
-│   │   ├── ConsoleIO.cpp
-│   │   ├── FileIO.h                      ← Cross-platform file read/write interface
-│   │   ├── FileIO_Windows.cpp           ← Uses <fstream>
-│   │   └── FileIO_MiniOS.cpp            ← Custom I/O
 │   │
 │   ├── System/                      ← System functions & utilities
 │   │   ├── SystemInterface.h
@@ -51,7 +45,7 @@
 │   │   ├── ErrorHandler.h
 │   │   └── ErrorHandler.cpp
 │   
-│   └── Utils/                       ← Common structs & types
+│   
 │                       
 │       
 │
