@@ -11,11 +11,13 @@
 100 PRINT "I was 3, jumped here!"
 105 LET B = B + 1
 
-110 IF B > 10 THEN
-120   PRINT "B is greater than 10"
-130 ELSE
-140   PRINT "B is 10 or less"
-150 END IF
+110 IF B > 10 THEN GOTO 120
+115 GOTO 130
+
+120 PRINT "B is greater than 10"
+125 GOTO 160
+
+130 PRINT "B is 10 or less"
 
 160 PRINT "Program ending."
 170 END

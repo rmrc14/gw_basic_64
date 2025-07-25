@@ -28,7 +28,7 @@ private:
     // member function
     void executeProgram();
     void executeLine(const std::string& line);
-
+    bool loadFileOnly(const std::string& filename);
   
 public:
     GWBasic64();

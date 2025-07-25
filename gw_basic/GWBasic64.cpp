@@ -7,6 +7,7 @@
 
 #define DIRECT_MODE -1
 
+// --------------helper function -------------
 std::string trim(const std::string& s) 
 {
 	size_t start = s.find_first_not_of(" \t");
@@ -74,13 +75,8 @@ void GWBasic64::executeProgram()
 void GWBasic64::runREPL()
 {
 	// RUN LIST NEW  every newline OK  and > 
-	// cmd-> 1 LIST 2 NEW 3 LOAD" 4 SAVE" 5 CONT<- 6 LPT1 7 TRON 8 TROFF 9 KEY 0 SCREEN
-	std::string line;
 
-	//for auto mode
-	/*bool automode = false;
-	int currentAutoLine = 10;
-	int autoIncrement = 10;*/
+	std::string line;
 
 	SystemInterface::printString("Ok\n"); //needs to print first on every iteration
 	while (true)
@@ -167,32 +163,44 @@ void GWBasic64::runREPL()
 				SystemInterface::printString("Ok\n");
 
 			}
-			else if (trimmed._Starts_with("LOAD ")) //load from file
+			else if (trimmed._Starts_with("LOAD") )
 			{
-				std::string filename = trimmed.substr(5);
-				auto start = filename.find_first_of("\"");
-				auto end = filename.find_last_of("\"");
-				auto checkBas = filename.find(".bas");
+				std::string filenamePart = trimmed.substr(4); // after "LOAD"
+				filenamePart.erase(0, filenamePart.find_first_not_of(" \t")); // trim leading space
 
-				if (start != std::string::npos && end != std::string::npos && end > start 
-					 && checkBas != std::string::npos)
-				{
-					if (start + 1 >= end)   // if the filename is empty warning to be given
-					{
+				if (filenamePart.empty()) {
+					SystemInterface::printString("syntax error: use LOAD \"filename.bas\"\n");
+					SystemInterface::printString("Ok\n");
+					continue;
+				}
+
+				if (filenamePart.front() == '"' && filenamePart.back() == '"') {
+					std::string filename = filenamePart.substr(1, filenamePart.length() - 2); // strip quotes
+
+					if (filename.empty()) {
 						SystemInterface::printString("filename cannot be empty\n");
+						SystemInterface::printString("Ok\n");
 						continue;
 					}
+					programMemory.clearMemory();
+					bool success = loadFileOnly(filename);
 
-					filename = filename.substr(start + 1, end - start - 1); //start and length for substr
-					loadAndRunFile(filename);
+					if (success) {
+						SystemInterface::printString("File loaded successfully\n");
+					}
+					else {
+						SystemInterface::printString("Unable to open file: ");
+						SystemInterface::printString(filename.c_str());
+						SystemInterface::printString("\n");
+					}
+				}
+				else {
+					SystemInterface::printString("syntax error: use LOAD \"filename.bas\"\n");
+				}
 
-				}
-				else
-				{
-					SystemInterface::printString("syntax error: use LOAD \" filename.bas\".bas\n");
-				}
 				SystemInterface::printString("Ok\n");
 			}
+
 			else if (trimmed._Starts_with("DELETE "))
 			{
 				std::string arguments = trimmed.substr(7); //rest of the line is stored
@@ -394,4 +402,20 @@ void  GWBasic64::executeLine(const std::string& line)
 
 
 }
+
+bool GWBasic64::loadFileOnly(const std::string& filename)
+{
+	if (!SystemInterface::openFile(filename)) {
+		return false;
+	}
+
+	std::string line;
+	while (SystemInterface::readLineFromFile(line)) {
+		programMemory.storeLine(line);
+	}
+
+	SystemInterface::closeFile();
+	return true;
+}
+
 
