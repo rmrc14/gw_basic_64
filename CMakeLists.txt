@@ -33,7 +33,7 @@ target_include_directories(gw_basic_core PUBLIC
     gw_basic/Lexer
     gw_basic/Parser
     gw_basic/Runtime
-    gw_basic/IO
+  #  gw_basic/IO
     gw_basic/System
     gw_basic/Errors
 )

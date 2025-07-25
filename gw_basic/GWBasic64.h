@@ -5,7 +5,6 @@
 #include "Parser/Parser.h"
 #include "Storage/ProgramMemory.h"
 #include "Errors/ErrorHandler.h"
-#include "IO/ConsoleIO.h"
 #include "Runtime/StatementExecutor.h"
 #include "ProgramInterface/CommandLineEditor.h"
 #include "System/SystemInterface.h"

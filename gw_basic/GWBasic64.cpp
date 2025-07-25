@@ -81,7 +81,7 @@ void GWBasic64::runREPL()
 	SystemInterface::printString("Ok\n"); //needs to print first on every iteration
 	while (true)
 	{
-		
+		//SystemInterface::drawStatusBar();
 		SystemInterface::printString("> ");
 
 		if (!cli.getLineFromCli(line)) break;

@@ -98,6 +98,23 @@ void SystemInterface::moveCursor(int x, int y)
     std::cout << "\x1B[" << y << ";" << x << "H";
 }
 
+void SystemInterface::drawStatusBar()
+{
+    // Save current cursor position
+    std::cout << "\033[s";
+
+    // Move to bottom line (line 24, column 1)
+    std::cout << "\033[30;1H";
+
+   // std::cout << "\033[2K";          // Clear the line
+    // Print status bar
+    std::cout << "1LIST   2RUN    3LOAD   4SAVE   5CONT   6LPT    7TRON   8TROFF   9KEY   0SCREEN";
+
+    // Restore cursor position
+    std::cout << "\033[u";
+
+    std::cout.flush(); // Ensure everything is output immediately
+}
 
 // -------------------------- file handling ---------------
 
