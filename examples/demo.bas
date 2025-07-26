@@ -1,0 +1,18 @@
+10 PRINT "GW-BASIC DEMO PROGRAM"
+20 LET A = 5
+30 LET B = 10
+40 FOR I = 1 TO 5
+50   PRINT "LOOP #"; I
+60   IF I = A THEN PRINT "I equals A!"
+70   IF I = 3 THEN GOTO 100
+80 NEXT I
+90 GOTO 110
+100 PRINT "I was 3, jumped here!"
+105 LET B = B + 1
+110 IF B > 10 THEN GOTO 120
+115 GOTO 130
+120 PRINT "B is greater than 10"
+125 GOTO 160
+130 PRINT "B is 10 or less"
+160 PRINT "Program ending."
+170 END

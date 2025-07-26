@@ -1,10 +1,9 @@
-/*#include "StatementExecuter.h"
+﻿/*#include "StatementExecuter.h"
 
 StatementExecuter::StatementExecuter() {
     // TODO: Implement StatementExecuter
 }
 */
-
 
 #include "StatementExecutor.h"
 #include <iostream>
@@ -36,12 +35,15 @@ void StatementExecutor::execute(ASTNode* node) {
 
 void StatementExecutor::executePrint(PrintNode* printNode) {
     Value result = evaluateExpr(printNode->expr);
+
     if (result.getType() == ValueType::INT)
         std::cout << result.asInt() << std::endl;
     else if (result.getType() == ValueType::FLOAT)
         std::cout << result.asFloat() << std::endl;
-    else
+    else if (result.getType() == ValueType::STRING)
         std::cout << result.asString() << std::endl;
+    else
+        std::cout << "Unknown value type" << std::endl;
 }
 
 void StatementExecutor::executeLet(LetNode* letNode) {
@@ -53,28 +55,42 @@ Value StatementExecutor::evaluateExpr(ASTNode* exprNode) {
     switch (exprNode->type()) {
     case ASTType::NumberExpr:
         return Value(std::stoi(static_cast<NumberNode*>(exprNode)->value));
+
     case ASTType::IdentExpr:
         return table_.getVariable(static_cast<IdentNode*>(exprNode)->name);
+
+    case ASTType::StringExpr:
+        return Value(static_cast<StringNode*>(exprNode)->value);
+
     case ASTType::BinOpExpr: {
         BinOpNode* bin = static_cast<BinOpNode*>(exprNode);
         Value leftVal = evaluateExpr(bin->left);
         Value rightVal = evaluateExpr(bin->right);
 
-        if (bin->op == "+")
+        if (bin->op == "+") {
+            // If either side is a string, do string concatenation
+            if (leftVal.getType() == ValueType::STRING || rightVal.getType() == ValueType::STRING) {
+                return Value(leftVal.asString() + rightVal.asString());
+            }
             return Value(leftVal.asInt() + rightVal.asInt());
-        else if (bin->op == "-")
+        }
+        else if (bin->op == "-") {
             return Value(leftVal.asInt() - rightVal.asInt());
-        else if (bin->op == "*")
+        }
+        else if (bin->op == "*") {
             return Value(leftVal.asInt() * rightVal.asInt());
+        }
         else if (bin->op == "/") {
             if (rightVal.asInt() == 0)
                 throw std::runtime_error("Division by zero");
             return Value(leftVal.asInt() / rightVal.asInt());
         }
-        else
-            throw std::runtime_error("Unknown operator");
+        else {
+            throw std::runtime_error("Unknown operator: " + bin->op);
+        }
     }
+
     default:
-        throw std::runtime_error("Unsupported expression");
+        throw std::runtime_error("Unsupported expression type");
     }
 }

@@ -1,22 +1,20 @@
-#pragma once
-
+#ifndef COMMANDLINEEDITOR_H
+#define COMMANDLINEEDITOR_H
 
 #include <string>
-#include <fstream>
-#include "SystemInterface.h"
-
+#include "SpecialKeyHandler.h"
 
 class CommandLineEditor {
 public:
     CommandLineEditor();
-
-    // Captures user input line by line (Windows or custom OS)
+    void setSpecialKeyHandler(SpecialKeyHandler* handler);
     bool getLineFromCli(std::string& line);
 
-
 private:
-    std::string buffer;   // Holds the current line of input
-    size_t cursorPosition;     // Tracks the current position of the cursor in the input
+    std::string buffer;
+    int cursorPosition;
+    SpecialKeyHandler* specialKeyHandler;
 };
 
+#endif
 

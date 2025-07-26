@@ -22,4 +22,3 @@ private:
     ValueType type_;
     std::variant<int, float, std::string> data_;
 };
-

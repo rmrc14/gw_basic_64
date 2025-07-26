@@ -8,7 +8,10 @@ enum class TokenType { //different types of token in GWBASICS
 	Keyword,
 	Symbol,
 	Comment,
-	END_OF_LINE
+	END_OF_LINE,
+	Operator,//to classify math or logical operator
+	Separator,//for seperating comma,colon etc.
+	Invalid
 };
 struct Token {
 	TokenType type; //what kind of token it is

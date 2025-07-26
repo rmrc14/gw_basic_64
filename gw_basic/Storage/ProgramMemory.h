@@ -31,7 +31,7 @@ RENUM 100, 30, 5        ' renumber lines starting at 100, from old line 30, with
 #include <map>
 #include <vector>
 
-class ConsoleIO; // Forward declaration if needed
+
 class SystemInterface; // Forward declaration if needed
 
 class ProgramMemory {
