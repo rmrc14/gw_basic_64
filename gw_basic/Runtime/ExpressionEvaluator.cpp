@@ -24,6 +24,7 @@ Value ExpressionEvaluator::evaluate(const std::string& expr) {
             if (num == 0) throw std::runtime_error("Division by zero");
             result /= num;
             break;
+
         default:
             throw std::runtime_error("Unknown operator");
         }
