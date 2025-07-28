@@ -7,7 +7,10 @@ StatementExecutor::StatementExecutor(SymbolTable& table, ProgramMemory& mem)
 void StatementExecutor::setCurrentLine(int line) {
     currentLine_ = line;
     jumpToLine_ = -1;  // Reset previous jump
+
 }
+
+
 
 int StatementExecutor::getNextLine(int line) const {
     return (jumpToLine_ != -1) ? jumpToLine_ : programMemory_.getNextLineNumber(line);
@@ -16,6 +19,9 @@ int StatementExecutor::getNextLine(int line) const {
 void StatementExecutor::requestJump(int targetLine) {
     jumpToLine_ = targetLine;
 }
+
+
+
 
 
 void StatementExecutor::execute(ASTNode* node) {
@@ -29,6 +35,8 @@ void StatementExecutor::execute(ASTNode* node) {
     case ASTType::ForStmt:
         executeFor(static_cast<ForNode*>(node));  // ✅ Correct cast
         break;
+
+
 
 
     case ASTType::Program: 
@@ -52,11 +60,21 @@ void StatementExecutor::execute(ASTNode* node) {
         executeIf(node);
         break;*/
 
-    /*case ASTType::GotoStmt: {
+    case ASTType::GotoStmt: {
         GotoNode* gotoNode = static_cast<GotoNode*>(node);
-        requestJump(gotoNode->targetLine);
+        requestJump(gotoNode->line);
         break;
-    }*/
+       /* class GotoNode :public ASTNode {
+        public:
+            int line;
+            GotoNode(int n) {
+                line = n;
+            }
+            ASTType type() const override {
+                return ASTType::GotoStmt;
+            }
+        };*/
+    }
 
     default:
         // Can add more like FOR, WHILE etc.
