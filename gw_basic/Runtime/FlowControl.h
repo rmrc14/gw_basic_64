@@ -12,4 +12,6 @@ public:
 
 private:
     SymbolTable& table_;
+
 };
+

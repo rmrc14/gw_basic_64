@@ -1,4 +1,4 @@
-﻿#include "StatementExecutor.h"
+#include "StatementExecutor.h"
 #include <iostream>
 
 StatementExecutor::StatementExecutor(SymbolTable& table, ProgramMemory& mem)
@@ -17,11 +17,17 @@ void StatementExecutor::requestJump(int targetLine) {
     jumpToLine_ = targetLine;
 }
 
+
 void StatementExecutor::execute(ASTNode* node) {
     if (!node) return;
 
     switch (node->type()) {
-    case ASTType::Program: {
+    case ASTType::IfElseStmt:
+        executeIf(node);
+        break;
+
+    case ASTType::Program: 
+    {
         ProgramNode* prog = static_cast<ProgramNode*>(node);
         for (auto stmt : prog->stmts) {
             execute(stmt);

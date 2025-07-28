@@ -28,11 +28,13 @@ public:
 private:
     SymbolTable& table_;
     ExpressionEvaluator evaluator_;
+
     ProgramMemory& programMemory_;
     FlowControl flowControl_;
 
     int currentLine_ = -1;
     int jumpToLine_ = -1;
+
 
     void executePrint(PrintNode* printNode);
     void executeLet(LetNode* letNode);
