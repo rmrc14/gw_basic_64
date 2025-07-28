@@ -1,4 +1,4 @@
-#include "StatementExecutor.h"
+﻿#include "StatementExecutor.h"
 #include <iostream>
 
 StatementExecutor::StatementExecutor(SymbolTable& table, ProgramMemory& mem)
@@ -25,6 +25,11 @@ void StatementExecutor::execute(ASTNode* node) {
     case ASTType::IfElseStmt:
         executeIf(node);
         break;
+
+    case ASTType::ForStmt:
+        executeFor(static_cast<ForNode*>(node));  // ✅ Correct cast
+        break;
+
 
     case ASTType::Program: 
     {
@@ -139,5 +144,29 @@ void StatementExecutor::executeIf(ASTNode* node) {
     }
     else if (elseStmt) {
         execute(elseStmt);
+    }
+}
+
+
+
+void StatementExecutor::executeFor(ForNode* forNode) {
+    std::string varName = forNode->var;
+    Value startVal = evaluateExpr(forNode->start);
+    Value endVal = evaluateExpr(forNode->end);
+    Value stepVal = forNode->step ? evaluateExpr(forNode->step) : Value(1);
+
+    table_.setVariable(varName, startVal);
+
+    while (true) {
+        int current = table_.getVariable(varName).asInt();
+        int end = endVal.asInt();
+        int step = stepVal.asInt();
+
+        if ((step > 0 && current > end) || (step < 0 && current < end))
+            break;
+
+        execute(forNode->body);  // ✅ Execute the loop body
+
+        table_.setVariable(varName, Value(current + step));
     }
 }
