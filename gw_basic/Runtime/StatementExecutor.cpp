@@ -9,13 +9,18 @@ StatementExecuter::StatementExecuter() {
 #include <iostream>
 
 StatementExecutor::StatementExecutor(SymbolTable& table)
-    : table_(table), evaluator_(table) {}
+    : table_(table), evaluator_(table), flowControl_(table) {}
 
 void StatementExecutor::execute(ASTNode* node) {
     if (!node) return;
 
     switch (node->type()) {
-    case ASTType::Program: {
+    case ASTType::IfElseStmt:
+        executeIf(node);
+        break;
+
+    case ASTType::Program: 
+    {
         ProgramNode* prog = static_cast<ProgramNode*>(node);
         for (auto stmt : prog->stmts) {
             execute(stmt);
@@ -92,5 +97,24 @@ Value StatementExecutor::evaluateExpr(ASTNode* exprNode) {
 
     default:
         throw std::runtime_error("Unsupported expression type");
+    }
+}
+
+void StatementExecutor::executeIf(ASTNode* node) {
+    auto* ifElse = static_cast<IfElseNode*>(node);
+    ASTNode* lhs = ifElse->left;
+    std::string op = ifElse->op;
+    ASTNode* rhs = ifElse->right;
+    ASTNode* thenStmt = ifElse->thenStmt;
+    ASTNode* elseStmt = ifElse->elseStmt;
+
+    Value leftVal = evaluateExpr(lhs);
+    Value rightVal = evaluateExpr(rhs);
+
+    if (flowControl_.evaluateCondition(op, leftVal, rightVal)) {
+        execute(thenStmt);
+    }
+    else if (elseStmt) {
+        execute(elseStmt);
     }
 }

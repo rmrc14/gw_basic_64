@@ -16,7 +16,7 @@ private:
     const Token& peek() const;
     Token get();
     bool match(TokenType, const std::string& value = "");
-    bool check(TokenType type, const std::string& value = "") const;
+    //bool check(TokenType type, const std::string& value = "") const;
 
     ASTNode* parseProgram();
     ASTNode* parseStatement();
@@ -27,6 +27,12 @@ private:
     ASTNode* parseFor();
     ASTNode* parseIf();
     ASTNode* parseGoto();
+    ASTNode* parseGosub();
+    ASTNode* parseReturn();
+    ASTNode* parseData();
+    ASTNode* parseRead();
+    ASTNode* parseStop();
+    ASTNode* parseRem();
     ASTNode* parseInput();
 
 };
