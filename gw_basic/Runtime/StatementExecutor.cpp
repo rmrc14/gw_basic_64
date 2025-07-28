@@ -43,9 +43,9 @@ void StatementExecutor::execute(ASTNode* node) {
         executeLet(static_cast<LetNode*>(node));
         break;
 
-    case ASTType::IfElseStmt:
+    /*case ASTType::IfElseStmt:
         executeIf(node);
-        break;
+        break;*/
 
     /*case ASTType::GotoStmt: {
         GotoNode* gotoNode = static_cast<GotoNode*>(node);
