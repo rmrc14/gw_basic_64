@@ -13,6 +13,7 @@ public:
 #include "ASTNode.h"
 #include "SymbolTable.h"
 #include "ExpressionEvaluator.h"
+#include "FlowControl.h"
 
 class StatementExecutor {
 public:
@@ -23,8 +24,10 @@ public:
 private:
     SymbolTable& table_;
     ExpressionEvaluator evaluator_;
+    FlowControl flowControl_;
 
     void executePrint(PrintNode* printNode);
     void executeLet(LetNode* letNode);
+    void executeIf(ASTNode* node);
     Value evaluateExpr(ASTNode* exprNode);
 };
