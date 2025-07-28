@@ -116,7 +116,7 @@ ASTNode* Parser::parseStatement() {
     // GOTO
     if (peek().type == TokenType::Keyword && peek().value == "GOTO") {
         get(); // consume the "GOTO" keyword
-        std::cerr << "[DEBUG] GOTO detected; calling parseGoto(), pos=" << pos << "\n";
+        //std::cerr << "[DEBUG] GOTO detected; calling parseGoto(), pos=" << pos << "\n";
         return parseGoto();
     }
     //--------------------------------------------------------

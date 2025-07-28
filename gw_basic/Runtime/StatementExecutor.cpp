@@ -1,4 +1,4 @@
-#include "StatementExecutor.h"
+﻿#include "StatementExecutor.h"
 #include <iostream>
 
 StatementExecutor::StatementExecutor(SymbolTable& table, ProgramMemory& mem)
@@ -7,7 +7,10 @@ StatementExecutor::StatementExecutor(SymbolTable& table, ProgramMemory& mem)
 void StatementExecutor::setCurrentLine(int line) {
     currentLine_ = line;
     jumpToLine_ = -1;  // Reset previous jump
+
 }
+
+
 
 int StatementExecutor::getNextLine(int line) const {
     return (jumpToLine_ != -1) ? jumpToLine_ : programMemory_.getNextLineNumber(line);
@@ -18,6 +21,9 @@ void StatementExecutor::requestJump(int targetLine) {
 }
 
 
+
+
+
 void StatementExecutor::execute(ASTNode* node) {
     if (!node) return;
 
@@ -25,6 +31,13 @@ void StatementExecutor::execute(ASTNode* node) {
     case ASTType::IfElseStmt:
         executeIf(node);
         break;
+
+    case ASTType::ForStmt:
+        executeFor(static_cast<ForNode*>(node));  // ✅ Correct cast
+        break;
+
+
+
 
     case ASTType::Program: 
     {
@@ -47,11 +60,21 @@ void StatementExecutor::execute(ASTNode* node) {
         executeIf(node);
         break;*/
 
-    /*case ASTType::GotoStmt: {
+    case ASTType::GotoStmt: {
         GotoNode* gotoNode = static_cast<GotoNode*>(node);
-        requestJump(gotoNode->targetLine);
+        requestJump(gotoNode->line);
         break;
-    }*/
+       /* class GotoNode :public ASTNode {
+        public:
+            int line;
+            GotoNode(int n) {
+                line = n;
+            }
+            ASTType type() const override {
+                return ASTType::GotoStmt;
+            }
+        };*/
+    }
 
     default:
         // Can add more like FOR, WHILE etc.
@@ -139,5 +162,29 @@ void StatementExecutor::executeIf(ASTNode* node) {
     }
     else if (elseStmt) {
         execute(elseStmt);
+    }
+}
+
+
+
+void StatementExecutor::executeFor(ForNode* forNode) {
+    std::string varName = forNode->var;
+    Value startVal = evaluateExpr(forNode->start);
+    Value endVal = evaluateExpr(forNode->end);
+    Value stepVal = forNode->step ? evaluateExpr(forNode->step) : Value(1);
+
+    table_.setVariable(varName, startVal);
+
+    while (true) {
+        int current = table_.getVariable(varName).asInt();
+        int end = endVal.asInt();
+        int step = stepVal.asInt();
+
+        if ((step > 0 && current > end) || (step < 0 && current < end))
+            break;
+
+        execute(forNode->body);  // ✅ Execute the loop body
+
+        table_.setVariable(varName, Value(current + step));
     }
 }

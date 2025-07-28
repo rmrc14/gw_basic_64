@@ -39,5 +39,7 @@ private:
     void executePrint(PrintNode* printNode);
     void executeLet(LetNode* letNode);
     void executeIf(ASTNode* node);
+    void executeFor(ForNode* forNode);
     Value evaluateExpr(ASTNode* exprNode);
+    
 };
