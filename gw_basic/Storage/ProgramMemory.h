@@ -70,6 +70,8 @@ public:
 
     // Renumber lines
     void renumber(int newStart = 10, int oldStart = 0, int increment = 10);
+    int getFirstLineNumber() const;
+    int getNextLineNumber(int current) const;
 
 
 private:

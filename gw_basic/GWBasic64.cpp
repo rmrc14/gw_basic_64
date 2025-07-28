@@ -19,7 +19,7 @@ std::string trim(const std::string& s)
 
 // intialising the object using default const.
 GWBasic64::GWBasic64()   
-	:lexer(),parser(),executor(symbolTable),programMemory(),errorHandler(),cli() {}
+	:lexer(),parser(),executor(symbolTable, programMemory),programMemory(),errorHandler(),cli() {}
 
 
 //-----------------   running .bas directly from main()     --------------
@@ -45,30 +45,21 @@ void GWBasic64::loadAndRunFile(const std::string& filename)
 
 void GWBasic64::executeProgram()
 {
-	//map<int, std::string> ProgramMemory
+	auto allLines = programMemory.getAllLines(); // std::map<int, std::string>
+	if (allLines.empty()) return;
 
-	auto allLines = programMemory.getAllLines();  //stores in deduced map of int &string
-
-	// now need to call the lexer parser 
-	for (const auto& [lineNo, line] : allLines)
-	{
-		try
-		{
-			auto tokens = lexer.tokenize(line);     //calls lexer to tokenize using enum
-			auto ast = parser.parse(tokens);
-			executor.execute(ast);
-		}
-		catch (const std::exception& e)
-		{
-			errorHandler.runtimeError(lineNo, e.what());//calls runtime error handler 
-			break;  //exits the loop after error is found
-			
-		}
-
+	int currentLine = programMemory.getFirstLineNumber();
+	while (currentLine != -1) {
+		std::string line = programMemory.getLine(currentLine);
+		auto tokens = lexer.tokenize(line);
+		auto ast = parser.parse(tokens);
+		executor.setCurrentLine(currentLine); // to allow jump
+		executor.execute(ast);
+		currentLine = executor.getNextLine(currentLine); // could return GOTO’d line
 	}
 
-
 }
+
 
 // ------------------------   run interpreter line by line through REPL ------------
 
