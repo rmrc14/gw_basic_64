@@ -8,8 +8,8 @@ StatementExecuter::StatementExecuter() {
 #include "StatementExecutor.h"
 #include <iostream>
 
-StatementExecutor::StatementExecutor(SymbolTable& table)
-    : table_(table), evaluator_(table) {}
+StatementExecutor::StatementExecutor(SymbolTable& table, ProgramMemory& mem)
+    : table_(table), evaluator_(table), programMemory_(mem){}
 
 void StatementExecutor::execute(ASTNode* node) {
     if (!node) return;
@@ -94,3 +94,22 @@ Value StatementExecutor::evaluateExpr(ASTNode* exprNode) {
         throw std::runtime_error("Unsupported expression type");
     }
 }
+
+void StatementExecutor::setCurrentLine(int line) {
+    currentLine_ = line;
+    jumpToLine_ = -1;  // reset any previous jumps
+}
+
+void StatementExecutor::requestJump(int targetLine) {
+    jumpToLine_ = targetLine;
+}
+
+int StatementExecutor::getNextLine(int line) const {
+    if (jumpToLine_ != -1)
+        return jumpToLine_;
+    return programMemory_.getNextLineNumber(line);  // now valid
+}
+
+
+
+

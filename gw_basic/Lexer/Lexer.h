@@ -2,8 +2,9 @@
 #define LEXER_H
 #include<string>
 #include<vector>
-
 #include "Token.h"
+
+
 
 //The Lexer class reads one line of Basiccode and breaks it into tokens
 class Lexer {
@@ -16,6 +17,7 @@ public:
 private:
 	std::string inputLine;//full line of code to process
 	unsigned int currentIndex;//tracks which character we are looking at
+
 	//Helper functions used while scanning the line
 	void skipSpaces();
 	char getCurrentChar() const;
