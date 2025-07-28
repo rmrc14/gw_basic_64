@@ -19,7 +19,7 @@ std::string trim(const std::string& s)
 
 // intialising the object using default const.
 GWBasic64::GWBasic64()   
-	:lexer(),parser(),executor(symbolTable),programMemory(),errorHandler(),cli() {}
+	:lexer(),parser(),executor(symbolTable, programMemory),programMemory(),errorHandler(),cli() {}
 
 
 //-----------------   running .bas directly from main()     --------------
@@ -45,30 +45,46 @@ void GWBasic64::loadAndRunFile(const std::string& filename)
 
 void GWBasic64::executeProgram()
 {
-	//map<int, std::string> ProgramMemory
+	auto allLines = programMemory.getAllLines(); // std::map<int, std::string>
+	if (allLines.empty()) return;
 
-	auto allLines = programMemory.getAllLines();  //stores in deduced map of int &string
-
-	// now need to call the lexer parser 
-	for (const auto& [lineNo, line] : allLines)
-	{
+	int currentLine = programMemory.getFirstLineNumber();
+	while (currentLine != -1) {
+		std::string line = programMemory.getLine(currentLine);
 		try
 		{
-			auto tokens = lexer.tokenize(line);     //calls lexer to tokenize using enum
+			auto tokens = lexer.tokenize(line);
 			auto ast = parser.parse(tokens);
+			executor.setCurrentLine(currentLine); // to allow jump -> initially 10 
 			executor.execute(ast);
+			currentLine = executor.getNextLine(currentLine); // implemented for goto and for loop
+		}
+		catch (const std::invalid_argument& e) // to add check for CONT key strokes
+		{
+			// syntax error thrown by parser / expression evaluator
+			errorHandler.syntaxError(currentLine, e.what());
+			break;   
+		}
+		catch (const std::logic_error& e)
+		{
+			// semantic / execution logical issue
+			errorHandler.runtimeError(currentLine, e.what());
+			break;
+		}
+		catch (const std::domain_error& e)
+		{
+			errorHandler.typeError(currentLine, e.what());
+			break;
 		}
 		catch (const std::exception& e)
 		{
-			errorHandler.runtimeError(lineNo, e.what());//calls runtime error handler 
-			break;  //exits the loop after error is found
-			
+			errorHandler.systemError( e.what());
+			break;
 		}
-
 	}
 
-
 }
+
 
 // ------------------------   run interpreter line by line through REPL ------------
 
@@ -81,7 +97,7 @@ void GWBasic64::runREPL()
 	SystemInterface::printString("Ok\n"); //needs to print first on every iteration
 	while (true)
 	{
-		//SystemInterface::drawStatusBar();
+		SystemInterface::drawStatusBar();
 		SystemInterface::printString("> ");
 
 		if (!cli.getLineFromCli(line)) break;
@@ -395,11 +411,33 @@ void GWBasic64::runREPL()
 
 void  GWBasic64::executeLine(const std::string& line)
 {
-
-	auto tokens = lexer.tokenize(line);     //calls lexer to tokenize using enum
-	auto ast = parser.parse(tokens);
-	executor.execute(ast);
-
+	try
+	{
+		auto tokens = lexer.tokenize(line);     //calls lexer to tokenize using enum
+		auto ast = parser.parse(tokens);
+		executor.execute(ast);
+	}
+	catch (const std::invalid_argument& e) // to add check for CONT key strokes
+	{
+		// syntax error thrown by parser / expression evaluator
+		errorHandler.syntaxError(DIRECT_MODE, e.what());
+		
+	}
+	catch (const std::logic_error& e)
+	{
+		// semantic / execution logical issue
+		errorHandler.runtimeError(DIRECT_MODE, e.what());
+		
+	}
+	catch (const std::domain_error& e)
+	{
+		errorHandler.typeError(DIRECT_MODE, e.what());
+	}
+	catch (const std::exception& e)
+	{
+		errorHandler.systemError(e.what());
+		
+	}
 
 }
 

@@ -238,3 +238,5 @@ std::string Lexer::toUpper(const std::string& s) {
 	std::transform(result.begin(), result.end(), result.begin(), ::toupper);
 	return result;
 }
+
+
