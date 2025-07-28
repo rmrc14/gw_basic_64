@@ -18,7 +18,6 @@ struct Token {
 	std::string value;//the exact word or number from code
 	size_t position;//Index where the token starts in the line
 	//std::string toString() const;
-
 	Token(TokenType t, const std::string& v, size_t p) {
 		type = t;
 		value = v;

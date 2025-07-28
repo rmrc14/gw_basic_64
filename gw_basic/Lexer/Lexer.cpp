@@ -17,8 +17,7 @@ const std::vector<std::string> Keywords = {
 	"ERL", "ERR", "ABS", "ASC", "ATN", "COS", "SIN", "TAN", "LOG", "EXP", "SQR",
 	"RND", "LEN", "LEFT$", "RIGHT$", "MID$", "TIME$", "DATE$", "INSTR", "VAL",
 	"PLOT", "LINE", "CIRCLE", "DRAW", "PAINT", "SOUND", "PLAY", "SCREEN",
-	"AND", "OR", "NOT", "XOR", "EQV", "IMP", "DEFINT", "DEFSNG", "DEFDBL", "DEFSTR", "DEF",
-	"REM","AS"
+	"AND", "OR", "NOT", "XOR", "EQV", "IMP", "DEFINT", "DEFSNG", "DEFDBL", "DEFSTR", "DEF"
 
 };
 //Lexer::Lexer(string input ):currentIndex(0){}
@@ -33,7 +32,6 @@ std::vector<Token> Lexer::tokenize(const std::string& line) {
 		skipSpaces();
 
 	}
-
 
 	//Line number validation
 	if (std::isdigit(getCurrentChar())) {
@@ -168,30 +166,25 @@ Token Lexer::extractWordOrKeyword() {
 Token Lexer::extractQuotedText()
 {
 	unsigned int start = currentIndex;
-	moveToNextChar(); // skip opening quote
+	moveToNextChar();//skip opening quote
 	std::string text;
-
-	// keep collecting characters until closing quote or end of line
+	//keep collecting characters until closing quote or end of line
 	while (getCurrentChar() != '\0') {
 		if (getCurrentChar() == '\\') {
-			moveToNextChar(); // escape
+			moveToNextChar();//escape
 
-			text += moveToNextChar(); // escape sequence like \"
+			text += moveToNextChar();//escape sequence like \"
 		}
 		else if (getCurrentChar() == '\"') {
-			moveToNextChar(); // skip closing quotes
-			return Token(TokenType::String, text, start); // return early if string is closed
+			moveToNextChar();//skip closing quotes
+			break;
 		}
 		else {
 			text += moveToNextChar();
 		}
 	}
-
-	//If loop ends without finding closing quote
-	std::cerr << "Warning: Unterminated string literal at position " << start << "\n";
 	return Token(TokenType::String, text, start);
 }
-
 
 //extract symbols ,operators or seperators like :,=,+,-,>=
 Token Lexer::extractOperatororSymbol() {
@@ -237,3 +230,4 @@ std::string Lexer::toUpper(const std::string& s) {
 	std::transform(result.begin(), result.end(), result.begin(), ::toupper);
 	return result;
 }
+

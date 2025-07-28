@@ -1,3 +1,4 @@
+
 #include "parser.h"
 #include <stdexcept>
 #include<cstdlib>
@@ -466,6 +467,4 @@ ASTNode* Parser::parseInput() {
     std::string name = (*tokens)[pos - 1].value;
     return new InputNode(name);
 }
-
-
 
