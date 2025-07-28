@@ -71,7 +71,7 @@ void GWBasic64::executeProgram()
 			errorHandler.runtimeError(currentLine, e.what());
 			break;
 		}
-		catch (const std::domain_error& e)
+		catch (const std::domain_error& e)  // math logic errors ->ex div by 0 
 		{
 			errorHandler.typeError(currentLine, e.what());
 			break;
