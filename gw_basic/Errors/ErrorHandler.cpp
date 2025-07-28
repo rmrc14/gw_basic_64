@@ -40,7 +40,7 @@ void ErrorHandler::syntaxError(int linNo, const std::string& msg)
 }
 
 void ErrorHandler::typeError(int line, const std::string& msg) {
-    std::string errorMsg = "[Type Error] line " + std::to_string(line) + " : " + msg + "\n";
+    std::string errorMsg = "[Type Error/Domain Error] line " + std::to_string(line) + " : " + msg + "\n";
     SystemInterface::printString(errorMsg.c_str());
 }
 

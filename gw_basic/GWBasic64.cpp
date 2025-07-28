@@ -51,11 +51,36 @@ void GWBasic64::executeProgram()
 	int currentLine = programMemory.getFirstLineNumber();
 	while (currentLine != -1) {
 		std::string line = programMemory.getLine(currentLine);
-		auto tokens = lexer.tokenize(line);
-		auto ast = parser.parse(tokens);
-		executor.setCurrentLine(currentLine); // to allow jump
-		executor.execute(ast);
-		currentLine = executor.getNextLine(currentLine); // could return GOTO’d line
+		try
+		{
+			auto tokens = lexer.tokenize(line);
+			auto ast = parser.parse(tokens);
+			executor.setCurrentLine(currentLine); // to allow jump -> initially 10 
+			executor.execute(ast);
+			currentLine = executor.getNextLine(currentLine); // implemented for goto and for loop
+		}
+		catch (const std::invalid_argument& e) // to add check for CONT key strokes
+		{
+			// syntax error thrown by parser / expression evaluator
+			errorHandler.syntaxError(currentLine, e.what());
+			break;   
+		}
+		catch (const std::logic_error& e)
+		{
+			// semantic / execution logical issue
+			errorHandler.runtimeError(currentLine, e.what());
+			break;
+		}
+		catch (const std::domain_error& e)
+		{
+			errorHandler.typeError(currentLine, e.what());
+			break;
+		}
+		catch (const std::exception& e)
+		{
+			errorHandler.systemError( e.what());
+			break;
+		}
 	}
 
 }
@@ -386,11 +411,33 @@ void GWBasic64::runREPL()
 
 void  GWBasic64::executeLine(const std::string& line)
 {
-
-	auto tokens = lexer.tokenize(line);     //calls lexer to tokenize using enum
-	auto ast = parser.parse(tokens);
-	executor.execute(ast);
-
+	try
+	{
+		auto tokens = lexer.tokenize(line);     //calls lexer to tokenize using enum
+		auto ast = parser.parse(tokens);
+		executor.execute(ast);
+	}
+	catch (const std::invalid_argument& e) // to add check for CONT key strokes
+	{
+		// syntax error thrown by parser / expression evaluator
+		errorHandler.syntaxError(DIRECT_MODE, e.what());
+		
+	}
+	catch (const std::logic_error& e)
+	{
+		// semantic / execution logical issue
+		errorHandler.runtimeError(DIRECT_MODE, e.what());
+		
+	}
+	catch (const std::domain_error& e)
+	{
+		errorHandler.typeError(DIRECT_MODE, e.what());
+	}
+	catch (const std::exception& e)
+	{
+		errorHandler.systemError(e.what());
+		
+	}
 
 }
 
