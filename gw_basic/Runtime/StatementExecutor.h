@@ -19,6 +19,7 @@ public:
 class StatementExecutor {
 public:
     StatementExecutor(SymbolTable& table, ProgramMemory& mem);
+    void executeInput(InputNode* node);
 
     void execute(ASTNode* node);
     void setCurrentLine(int line);        // Needed for GOTO/FOR

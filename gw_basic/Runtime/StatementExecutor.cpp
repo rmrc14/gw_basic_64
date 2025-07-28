@@ -56,6 +56,11 @@ void StatementExecutor::execute(ASTNode* node) {
         executeLet(static_cast<LetNode*>(node));
         break;
 
+    case ASTType::InputStmt:
+        executeInput(static_cast<InputNode*>(node));
+        break;
+
+
     /*case ASTType::IfElseStmt:
         executeIf(node);
         break;*/
@@ -187,4 +192,31 @@ void StatementExecutor::executeFor(ForNode* forNode) {
 
         table_.setVariable(varName, Value(current + step));
     }
+}
+
+
+void StatementExecutor::executeInput(InputNode* node) {
+    if (!node) {
+        std::cerr << "[System Error] : INPUT requires a variable name\n";
+        return;
+    }
+
+    std::string input;
+    std::cout << "? ";
+    std::getline(std::cin, input);
+
+    Value val;
+    try {
+        if (input.find('.') != std::string::npos) {
+            val = Value(std::stof(input));
+        }
+        else {
+            val = Value(std::stoi(input));
+        }
+    }
+    catch (...) {
+        val = Value(input);  // Fallback as string
+    }
+
+    table_.setVariable(node->name, val);
 }
