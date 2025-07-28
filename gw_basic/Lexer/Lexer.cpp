@@ -189,7 +189,7 @@ Token Lexer::extractQuotedText()
 
 	//If loop ends without finding closing quote
 	//std::cerr << "Warning: Unterminated string literal at position " << start << "\n";
-	throw std::runtime_error("Warning: Unterminated string literal at position " +std::to_string(start));
+	throw std::logic_error(" Unterminated string literal at position " +std::to_string(start));
 	return Token(TokenType::String, text, start);
 }
 

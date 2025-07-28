@@ -67,7 +67,7 @@ void GWBasic64::executeProgram()
 		}
 		catch (const std::logic_error& e)
 		{
-			// semantic / execution logical issue
+			// semantic / execution logical issue /LEXER throws
 			errorHandler.runtimeError(currentLine, e.what());
 			break;
 		}
@@ -78,7 +78,7 @@ void GWBasic64::executeProgram()
 		}
 		catch (const std::exception& e)
 		{
-			errorHandler.systemError( e.what());
+			errorHandler.systemError(e.what());
 			break;
 		}
 	}
@@ -205,9 +205,10 @@ void GWBasic64::runREPL()
 						SystemInterface::printString("File loaded successfully\n");
 					}
 					else {
-						SystemInterface::printString("Unable to open file: ");
-						SystemInterface::printString(filename.c_str());
-						SystemInterface::printString("\n");
+						throw std::ios_base::failure("Unable to open file: "+ filename);
+						//SystemInterface::printString("Unable to open file: ");
+						//SystemInterface::printString(filename.c_str());
+						//SystemInterface::printString("\n");
 					}
 				}
 				else {
@@ -398,12 +399,17 @@ void GWBasic64::runREPL()
 
 
 		}
+		catch (const std::ios_base::failure& e)
+		{
+			errorHandler.systemError(e.what());
+		}
 		catch(const std::exception& e)
 		{
 			errorHandler.runtimeError(DIRECT_MODE, e.what());
 			//break; 
 
 		}
+		
 	}
 
 }

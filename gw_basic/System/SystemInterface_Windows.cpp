@@ -147,7 +147,9 @@ void SystemInterface::createAndSaveFile(const std::string& path, const std::vect
     fio.open(path,std::ios::out);
     if (!fio.is_open())
     {
-        throw std::runtime_error("unable to open file: " + path);
+
+       // std::string msgErr = "unable to open file: " + path;
+        throw std::ios_base::failure("unable to open file: " + path);
     }
     for (const auto& l : lines)
     {
