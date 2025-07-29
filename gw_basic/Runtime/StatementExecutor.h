@@ -15,6 +15,8 @@ public:
 #include "ExpressionEvaluator.h"
 #include "ProgramMemory.h"
 #include "FlowControl.h"
+#include "DataManager.h"
+
 
 class StatementExecutor {
 public:
@@ -32,6 +34,7 @@ private:
 
     ProgramMemory& programMemory_;
     FlowControl flowControl_;
+    DataManager dataManager_;
 
     int currentLine_ = -1;
     int jumpToLine_ = -1;

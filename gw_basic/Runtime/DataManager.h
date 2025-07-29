@@ -1,14 +1,13 @@
 #pragma once
 #include <vector>
-#include "TypeSystem.h"  // Value
+#include "TypeSystem.h"
 
 class DataManager {
-public:
-    void load(const std::vector<Value>& newValues);
-    Value readNext();
-    void restore(); // Optional: resets read pointer
+    std::vector<Value> data_;
+    size_t current_ = 0;
 
-private:
-    std::vector<Value> values_;
-    size_t index_ = 0;
+public:
+    void addData(const std::vector<Value>& values);
+    Value readNext();
+    void reset();
 };

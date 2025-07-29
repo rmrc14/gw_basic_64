@@ -1,5 +1,6 @@
 ﻿#include "StatementExecutor.h"
 #include <iostream>
+#include <sstream> 
 
 StatementExecutor::StatementExecutor(SymbolTable& table, ProgramMemory& mem)
     : table_(table), evaluator_(table), programMemory_(mem), flowControl_(table) {}
@@ -28,6 +29,11 @@ void StatementExecutor::execute(ASTNode* node) {
     if (!node) return;
 
     switch (node->type()) {
+
+    case ASTType::RemStmt:
+        // Do nothing, REM is just a comment.
+        return;
+
     case ASTType::IfElseStmt:
         executeIf(node);
         break;
@@ -35,6 +41,8 @@ void StatementExecutor::execute(ASTNode* node) {
     case ASTType::ForStmt:
         executeFor(static_cast<ForNode*>(node));  // ✅ Correct cast
         break;
+
+    
 
 
 
@@ -52,6 +60,8 @@ void StatementExecutor::execute(ASTNode* node) {
         executePrint(static_cast<PrintNode*>(node));
         break;
 
+    
+
     case ASTType::LetStmt:
         executeLet(static_cast<LetNode*>(node));
         break;
@@ -59,6 +69,39 @@ void StatementExecutor::execute(ASTNode* node) {
     case ASTType::InputStmt:
         executeInput(static_cast<InputNode*>(node));
         break;
+
+    case ASTType::DataStmt: {
+        auto* dataNode = static_cast<DataNode*>(node);
+        std::vector<Value> parsedValues;
+
+        for (const auto& valStr : dataNode->values) {
+            std::string trimmed = valStr;
+            trimmed.erase(0, trimmed.find_first_not_of(" \t"));
+            trimmed.erase(trimmed.find_last_not_of(" \t") + 1);
+
+            // If it’s a string literal (starts and ends with quotes)
+            if (trimmed.size() >= 2 && trimmed.front() == '"' && trimmed.back() == '"') {
+                parsedValues.emplace_back(trimmed.substr(1, trimmed.size() - 2));  // Remove quotes
+            }
+            else {
+                Value val = evaluator_.evaluate(trimmed);  // Must be number or variable
+                parsedValues.push_back(val);
+            }
+        }
+
+        dataManager_.addData(parsedValues);
+        break;
+    }
+
+    
+
+    case ASTType::ReadStmt: {
+        auto* read = static_cast<ReadNode*>(node);
+        Value v = dataManager_.readNext();
+        table_.setVariable(read->var, v);
+        break;
+    }
+
 
 
     /*case ASTType::IfElseStmt:
@@ -220,3 +263,5 @@ void StatementExecutor::executeInput(InputNode* node) {
 
     table_.setVariable(node->name, val);
 }
+
+

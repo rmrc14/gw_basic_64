@@ -33,10 +33,18 @@ Value ExpressionEvaluator::evaluate(const std::string& expr) {
 
     return Value(result);
 }
-
 Value ExpressionEvaluator::parseToken(const std::string& token) {
-    if (std::isdigit(token[0]))
+    if (token.size() >= 2 && token.front() == '"' && token.back() == '"') {
+        // It's a string literal: remove quotes
+        return Value(token.substr(1, token.size() - 2));
+    }
+    else if (std::isdigit(token[0]) ||
+        (token[0] == '-' && token.size() > 1 && std::isdigit(token[1]))) {
+        // It's an integer number
         return Value(std::stoi(token));
-    else
+    }
+    else {
+        // It's a variable, look it up
         return table_.getVariable(token);
+    }
 }
