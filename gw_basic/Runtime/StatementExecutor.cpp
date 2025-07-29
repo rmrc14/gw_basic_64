@@ -60,7 +60,9 @@ void StatementExecutor::execute(ASTNode* node) {
         executePrint(static_cast<PrintNode*>(node));
         break;
 
-    
+    case ASTType::StopStmt:
+        std::exit(0); // Or throw an exception if you want custom STOP handling
+        break;
 
     case ASTType::LetStmt:
         executeLet(static_cast<LetNode*>(node));
