@@ -37,11 +37,10 @@ gw_basic_64/
 │   ├── Runtime/              ← Executor & Evaluator
 │   ├── ProgramInterface/     ← REPL, CLI handling
 │   ├── System/               ← System functions (memory, etc.)
-│   ├── IO/                   ← Console I/O, FILES
 │   ├── Errors/               ← Error handling
 ├── tests/                    ← Unit tests using GTest
 │   └── test_dummy.cpp
 ├── CMakeLists.txt            ← Build system
 ├── .github/
-│   └── workflows/ci.yml      ← GitHub Actions CI pipeline
+│   └── workflows/ci.yml      ← GitHub Actions CI pipeline (not implemented)
 
