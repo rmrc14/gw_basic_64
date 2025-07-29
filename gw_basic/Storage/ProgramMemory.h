@@ -4,7 +4,11 @@
 
 bool lineExist(int linenumber)  // gives true if line found in memory
 
-void ProgramMemory::deleteLine(int lineNumber)
+void ProgramMemory::deleteLine(int lineNumber ,int secondline number)
+DELETE 100         ' Deletes line 100
+DELETE 100,200     ' Deletes lines 100 through 200 (inclusive)
+
+
 
 std::string getLine(int lineNumber) const;
 
@@ -27,6 +31,7 @@ RENUM 100, 30, 5        ' renumber lines starting at 100, from old line 30, with
 #include <string>
 #include <map>
 #include <vector>
+
 
 class SystemInterface; // Forward declaration if needed
 
@@ -65,6 +70,8 @@ public:
 
     // Renumber lines
     void renumber(int newStart = 10, int oldStart = 0, int increment = 10);
+    int getFirstLineNumber() const;
+    int getNextLineNumber(int current) const;
 
     void clearMemory();
 

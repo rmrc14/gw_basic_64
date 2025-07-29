@@ -1,73 +1,88 @@
-//#include "CommandLineEditor.h"
-
-//CommandLineEditor::CommandLineEditor() {
-    // TODO: Implement CommandLineEditor
-//}
-
 #include "CommandLineEditor.h"
-#include <iostream>
-#include <fstream>
-#include "SystemInterface.h" // Interface with System for input/output
+#include "ScreenRenderer.h"
+#include "SystemInterface.h"
 
+CommandLineEditor::CommandLineEditor()
+    : cursorPosition(0), specialKeyHandler(nullptr) {}
 
-    // vijay laxmi implement the command keys 
-    // Simulate EOF handling if needed (you could check for Ctrl+Z or similar here)
-    // For now, always return true unless you want to add special termination logic.
-
-CommandLineEditor::CommandLineEditor() : cursorPosition(0) {}
+void CommandLineEditor::setSpecialKeyHandler(SpecialKeyHandler* handler) {
+    specialKeyHandler = handler;
+}
 
 bool CommandLineEditor::getLineFromCli(std::string& line) {
     buffer.clear();
     cursorPosition = 0;
 
-    while (true) {
-        check_SKey evt = SystemInterface::readKey();
+    //SystemInterface::printString("< ");
 
-        if (evt.isSpecial) {
-            switch (evt.sKey) {
+    while (true) {
+        check_SKey key = SystemInterface::readKey();
+
+        if (key.isSpecial) {
+            if (specialKeyHandler && specialKeyHandler->handleSpecialKey(key, buffer)) {
+                SystemInterface::putChar('\n');
+                line = buffer;
+                return true;
+            }
+
+            switch (key.sKey) {
             case SpecialKey::LEFT:
                 if (cursorPosition > 0) {
                     cursorPosition--;
-                    SystemInterface::moveCursor(cursorPosition + 1, 1);  // x is 1-based
+                    SystemInterface::printString("\x1B[D"); // Move left
                 }
                 break;
-
             case SpecialKey::RIGHT:
-                if (cursorPosition < buffer.length()) {
+                if (cursorPosition < buffer.size()) {
                     cursorPosition++;
-                    SystemInterface::moveCursor(cursorPosition + 1, 1);
+                    SystemInterface::printString("\x1B[C"); // Move right
                 }
                 break;
-
             case SpecialKey::ESC:
-                return false;  // Esc to cancel
-            case SpecialKey::CTRL_Z:
-                return false;  // Ctrl+Z as EOF simulation
+            case SpecialKey::CTRL_C:
+                return false;
             default:
                 break;
             }
         }
         else {
-            char c = evt.ch;
+            char ch = key.ch;
 
-            if (c == '\b' && cursorPosition > 0) {
-                buffer.erase(--cursorPosition, 1);
-                SystemInterface::putChar('\b');
-                SystemInterface::putChar(' ');
-                SystemInterface::putChar('\b');
-            }
-            else if (c == '\r') {
+            if (ch == '\r' || ch == '\n') {
                 SystemInterface::putChar('\n');
-                break;
+                line = buffer;
+                return true;
             }
+
+            else if (ch == '\b' || ch == 127) {
+                if (cursorPosition > 0) {
+                    buffer.erase(buffer.begin() + cursorPosition - 1);
+                    cursorPosition--;
+
+                    // Move left, shift rest, clear trailing char
+                    SystemInterface::printString("\b");
+                    for (size_t i = cursorPosition; i < buffer.size(); ++i)
+                        SystemInterface::putChar(buffer[i]);
+                    SystemInterface::printString(" \b");
+
+                    // Move cursor back to original spot
+                    for (size_t i = cursorPosition + 1; i < buffer.size() + 1; ++i)
+                        SystemInterface::printString("\x1B[D");
+                }
+            }
+
             else {
-                buffer.insert(buffer.begin() + cursorPosition, c);
-                ++cursorPosition;
-                SystemInterface::putChar(c);
+                buffer.insert(buffer.begin() + cursorPosition, ch);
+
+                // Print character and shift rest
+                for (size_t i = cursorPosition; i < buffer.size(); ++i)
+                    SystemInterface::putChar(buffer[i]);
+                cursorPosition++;
+
+                // Move cursor back to correct spot
+                for (size_t i = cursorPosition; i < buffer.size(); ++i)
+                    SystemInterface::printString("\x1B[D");
             }
         }
     }
-
-    line = buffer;
-    return true;
 }

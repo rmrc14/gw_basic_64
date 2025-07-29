@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SYSTEM_INTERFACE
+#define SYSTEM_INTERFACE
 #include<string>
 #include<vector>
 
@@ -41,7 +42,7 @@ public:
     // Screen/UI
     static void clearScreen();
     static void moveCursor(int x, int y);
-
+    static void drawStatusBar();
     // Dynamic Memory management ---->  New / Delete 
  
     //template<class T ,class... Args>  // New
@@ -51,3 +52,5 @@ public:
     //static void sysDelete(T* ptr);
    
 };
+
+#endif

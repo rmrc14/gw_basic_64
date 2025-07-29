@@ -139,3 +139,12 @@ void ProgramMemory::renumber(int newStart, int oldStart, int increment) {
     memory = std::move(newMemory);
 }
 
+int ProgramMemory::getFirstLineNumber() const {
+    if (memory.empty()) return -1;
+    return memory.begin()->first;  // map is sorted by key
+}
+
+int ProgramMemory::getNextLineNumber(int current) const {
+    auto it = memory.upper_bound(current);  // finds first line > current
+    return (it != memory.end()) ? it->first : -1;
+}

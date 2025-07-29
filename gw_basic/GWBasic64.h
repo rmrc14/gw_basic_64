@@ -5,7 +5,6 @@
 #include "Parser/Parser.h"
 #include "Storage/ProgramMemory.h"
 #include "Errors/ErrorHandler.h"
-#include "IO/ConsoleIO.h"
 #include "Runtime/StatementExecutor.h"
 #include "ProgramInterface/CommandLineEditor.h"
 #include "System/SystemInterface.h"
@@ -22,13 +21,14 @@ private:
     StatementExecutor executor;
     ProgramMemory programMemory;
     ErrorHandler errorHandler;
-   // ConsoleIO console;
     CommandLineEditor cli;
     SymbolTable symbolTable;
+
     // member function
     void executeProgram();
     void executeLine(const std::string& line);
-
+    bool loadFileOnly(const std::string& filename);
+  
 public:
     GWBasic64();
 
