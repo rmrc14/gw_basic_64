@@ -51,7 +51,7 @@
 │   ├── System/                      ← System functions & utilities
 │   │   ├── SystemInterface.h
 │   │   ├── SystemInterface_Windows.cpp
-│   │   ├── SystemInterface_MiniOS.cpp  //custom OS to be implemented do we need asm? requires x86_64-elf g++ cross compiler
+│   │   ├── SystemInterface_MiniOS.cpp  //custom OS to be implemented do we need asm? requires x86_64-elf g++ crossCompiler
 │   │
 │   ├── Errors/                      ← Error handling
 │   │   ├── ErrorHandler.h
