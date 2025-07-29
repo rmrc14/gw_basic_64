@@ -30,7 +30,7 @@
 │   ├── Runtime/                     ← Executor & evaluator
 │   │   ├── StatementExecutor.h
 │   │   ├── StatementExecutor.cpp
-│   │   ├── ExpressionEvaluator.h    ← ( for parsing math)
+│   │   ├── ExpressionEvaluator.h    ← (for parsing math)
 │   │   ├── ExpressionEvaluator.cpp
 │   │   ├── DataManager.cpp
 │   │   ├── DataManager.h
@@ -51,7 +51,7 @@
 │   ├── System/                      ← System functions & utilities
 │   │   ├── SystemInterface.h
 │   │   ├── SystemInterface_Windows.cpp
-│   │   ├── SystemInterface_MiniOS.cpp  //custom OS to be implemented do we need asm?
+│   │   ├── SystemInterface_MiniOS.cpp  //custom OS to be implemented do we need asm? requires x86_64-elf g++ cross compiler
 │   │
 │   ├── Errors/                      ← Error handling
 │   │   ├── ErrorHandler.h
