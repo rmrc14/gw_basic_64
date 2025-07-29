@@ -16,6 +16,7 @@ public:
 #include "ProgramMemory.h"
 #include "FlowControl.h"
 #include "DataManager.h"
+#include "SubroutineManager.h"
 
 
 class StatementExecutor {
@@ -31,7 +32,7 @@ public:
 private:
     SymbolTable& table_;
     ExpressionEvaluator evaluator_;
-
+    SubroutineManager subroutineManager_;
     ProgramMemory& programMemory_;
     FlowControl flowControl_;
     DataManager dataManager_;

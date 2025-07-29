@@ -1,19 +1,19 @@
 #include "SubroutineManager.h"
 #include <stdexcept>
 
-void SubroutineManager::push(int returnLine) {
-    returnStack.push(returnLine);
+void SubroutineManager::pushReturnAddress(int line) {
+    returnStack_.push(line);
 }
 
-int SubroutineManager::pop() {
-    if (returnStack.empty()) {
+int SubroutineManager::popReturnAddress() {
+    if (returnStack_.empty()) {
         throw std::runtime_error("RETURN without GOSUB");
     }
-    int val = returnStack.top();
-    returnStack.pop();
-    return val;
+    int line = returnStack_.top();
+    returnStack_.pop();
+    return line;
 }
 
-bool SubroutineManager::isEmpty() const {
-    return returnStack.empty();
+bool SubroutineManager::hasReturnAddress() const {
+    return !returnStack_.empty();
 }

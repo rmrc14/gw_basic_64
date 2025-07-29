@@ -25,6 +25,7 @@ void StatementExecutor::requestJump(int targetLine) {
 
 
 
+
 void StatementExecutor::execute(ASTNode* node) {
     if (!node) return;
 
@@ -41,10 +42,22 @@ void StatementExecutor::execute(ASTNode* node) {
     case ASTType::ForStmt:
         executeFor(static_cast<ForNode*>(node));  // ✅ Correct cast
         break;
+    case ASTType::GosubStmt: {
+        GosubNode* gosub = static_cast<GosubNode*>(node);
+        int returnLine = programMemory_.getNextLineNumber(currentLine_);
+        subroutineManager_.pushReturnAddress(returnLine);  // Push next line
+        requestJump(gosub->line);  // Jump to subroutine
+        break;
+    }
 
-    
-
-
+    case ASTType::ReturnStmt: {
+        if (!subroutineManager_.hasReturnAddress()) {
+            throw std::runtime_error("RETURN without GOSUB");
+        }
+        int returnLine = subroutineManager_.popReturnAddress();
+        requestJump(returnLine);
+        break;
+    }
 
 
     case ASTType::Program: 

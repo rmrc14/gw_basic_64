@@ -3,10 +3,10 @@
 
 class SubroutineManager {
 public:
-    void push(int returnLine);
-    int pop();
-    bool isEmpty() const;
+    void pushReturnAddress(int line);
+    int popReturnAddress();
+    bool hasReturnAddress() const;
 
 private:
-    std::stack<int> returnStack;
+    std::stack<int> returnStack_;
 };
