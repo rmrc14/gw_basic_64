@@ -30,6 +30,8 @@ public:
     void requestJump(int targetLine);     // Called from GOTO/IF THEN GOTO
 
 private:
+      
+
     SymbolTable& table_;
     ExpressionEvaluator evaluator_;
     SubroutineManager subroutineManager_;
@@ -40,11 +42,15 @@ private:
     int currentLine_ = -1;
     int jumpToLine_ = -1;
 
-
+    
     void executePrint(PrintNode* printNode);
     void executeLet(LetNode* letNode);
     void executeIf(ASTNode* node);
     void executeFor(ForNode* forNode);
+    void executeDoLoop(DoLoopNode* node);
+    void executeField(FieldNode* node);
+  
+
     Value evaluateExpr(ASTNode* exprNode);
     
 };

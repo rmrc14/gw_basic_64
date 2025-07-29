@@ -13,6 +13,7 @@ void StatementExecutor::setCurrentLine(int line) {
 
 
 
+
 int StatementExecutor::getNextLine(int line) const {
     return (jumpToLine_ != -1) ? jumpToLine_ : programMemory_.getNextLineNumber(line);
 }
@@ -39,9 +40,16 @@ void StatementExecutor::execute(ASTNode* node) {
         executeIf(node);
         break;
 
-    case ASTType::ForStmt:
-        executeFor(static_cast<ForNode*>(node));  // ✅ Correct cast
+    case ASTType::FieldStmt:
+        executeField(static_cast<FieldNode*>(node));
         break;
+
+
+    case ASTType::ForStmt:
+        executeFor(static_cast<ForNode*>(node));  
+        break;
+
+
     case ASTType::GosubStmt: {
         GosubNode* gosub = static_cast<GosubNode*>(node);
         int returnLine = programMemory_.getNextLineNumber(currentLine_);
@@ -81,6 +89,11 @@ void StatementExecutor::execute(ASTNode* node) {
         executeLet(static_cast<LetNode*>(node));
         break;
 
+    case ASTType::DoLoopStmt:
+        executeDoLoop(static_cast<DoLoopNode*>(node));
+        break;
+
+
     case ASTType::InputStmt:
         executeInput(static_cast<InputNode*>(node));
         break;
@@ -116,6 +129,10 @@ void StatementExecutor::execute(ASTNode* node) {
         table_.setVariable(read->var, v);
         break;
     }
+    
+  
+
+
 
 
 
@@ -139,8 +156,11 @@ void StatementExecutor::execute(ASTNode* node) {
         };*/
     }
 
+    
+
+
     default:
-        // Can add more like FOR, WHILE etc.
+        
         break;
     }
 }
@@ -246,7 +266,7 @@ void StatementExecutor::executeFor(ForNode* forNode) {
         if ((step > 0 && current > end) || (step < 0 && current < end))
             break;
 
-        execute(forNode->body);  // ✅ Execute the loop body
+        execute(forNode->body);  
 
         table_.setVariable(varName, Value(current + step));
     }
@@ -278,5 +298,46 @@ void StatementExecutor::executeInput(InputNode* node) {
 
     table_.setVariable(node->name, val);
 }
+void StatementExecutor::executeDoLoop(DoLoopNode* node) {
+    if (!node) return;
+
+    if (!node->body) {
+        std::cout << "[System Error] : DO missing LOOP" << std::endl;
+        return;
+    }
+
+    while (true) {
+        execute(node->body);  // run the loop body
+
+        // No condition = infinite loop (break manually if desired)
+        if (!node->cond) {
+            break;  // Or remove this to allow infinite loops
+        }
+
+        Value condVal = evaluateExpr(node->cond);
+        bool result = condVal.asInt();
+
+        if (node->untilStyle) {
+            if (result) break; // UNTIL cond true → exit
+        }
+        else {
+            if (!result) break; // WHILE cond false → exit
+        }
+    }
+}
+void StatementExecutor::executeField(FieldNode* node) {
+    std::cout << "DEBUG: fileNum = " << node->fileNum << "\n";
+    if (node->fileNum <= 0) {
+        std::cerr << "[System Error] : FIELD needs file number\n";
+        return;
+    }
+
+    std::cout << "[FIELD #" << node->fileNum << "] ";
+    for (auto& f : node->fields)
+        std::cout << f.second << "(" << f.first << ") ";
+    std::cout << "\n";
+}
+
+
 
 
