@@ -183,7 +183,7 @@ void StatementExecutor::executeFor(ForNode* forNode) {
         if ((step > 0 && current > end) || (step < 0 && current < end))
             break;
 
-        execute(forNode->body);  // ✅ Execute the loop body
+        execute(forNode->body);  // Execute the loop body
 
         table_.setVariable(varName, Value(current + step));
     }
