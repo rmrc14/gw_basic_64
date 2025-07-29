@@ -31,8 +31,19 @@
 │   │   ├── StatementExecutor.cpp
 │   │   ├── ExpressionEvaluator.h    ← (optional, for parsing math)
 │   │   ├── ExpressionEvaluator.cpp
+│   │   ├── DataManager.cpp
+│   │   ├── DataManager.h
+│   │   ├── FlowControl.cpp
+│   │   ├── FlowControl.h
+│   │   ├── IOHandler.cpp
+│   │   ├── IOHandler.h
+│   │   ├── SubroutineManager.cpp    -->assigned to magesh
+│   │   ├── SubroutineManager.h
+│   │   ├── FunctionLibraries.cpp    -->assigned to vijaylaxmi
+│   │   ├── FunctionLibraries.h
 │   │   ├── SymbolTable.h
 │   │   ├── SymbolTable.cpp
+│   │   ├── TypeSystem.cpp
 │   │   └── TypeSystem.h             ← Type system (int, string, etc.)
 │   │
 │   │
