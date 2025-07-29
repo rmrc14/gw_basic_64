@@ -20,6 +20,7 @@ RENUM 100, 30, 5        ' renumber lines starting at 100, from old line 30, with
 */
 
 
+
 #ifndef PROGRAM_MEMORY_H
 #define PROGRAM_MEMORY_H
 
@@ -27,7 +28,6 @@ RENUM 100, 30, 5        ' renumber lines starting at 100, from old line 30, with
 #include <map>
 #include <vector>
 
-class ConsoleIO; // Forward declaration if needed
 class SystemInterface; // Forward declaration if needed
 
 class ProgramMemory {
@@ -52,8 +52,7 @@ public:
     // List all lines using system output
     void list() const;
 
-    // Clear memory
-    void clearMemory();
+//clear    void clearMemory();
 
     // File I/O
     bool loadFromFile(const std::string& path);
@@ -66,6 +65,8 @@ public:
 
     // Renumber lines
     void renumber(int newStart = 10, int oldStart = 0, int increment = 10);
+
+    void clearMemory();
 
 
 private:

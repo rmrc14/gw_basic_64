@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <sstream>
 #include <vector>
+#include <map>
 
 ProgramMemory::ProgramMemory() {
     // Initialize empty memory
