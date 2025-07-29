@@ -11,7 +11,8 @@
 │   ├── ProgramInterface/            ← REPL, screen rendering, input
 │   │   ├── CommandLineEditor.h
 │   │   ├── CommandLineEditor.cpp
-│   │   └── SpecialKeyHandler.h      ← (optional advanced REPL keys)
+│   │   ├── ScreenRender.h
+│   │   └── SpecialKeyHandler.h      ← (advanced REPL keys)
 │   │
 │   ├── Storage/                     ← Stores program lines, line editing
 │   │   ├── ProgramMemory.h
@@ -29,7 +30,7 @@
 │   ├── Runtime/                     ← Executor & evaluator
 │   │   ├── StatementExecutor.h
 │   │   ├── StatementExecutor.cpp
-│   │   ├── ExpressionEvaluator.h    ← (optional, for parsing math)
+│   │   ├── ExpressionEvaluator.h    ← ( for parsing math)
 │   │   ├── ExpressionEvaluator.cpp
 │   │   ├── DataManager.cpp
 │   │   ├── DataManager.h
