@@ -130,15 +130,6 @@ void StatementExecutor::execute(ASTNode* node) {
         break;
     }
     
-  
-
-
-
-
-
-    /*case ASTType::IfElseStmt:
-        executeIf(node);
-        break;*/
 
     case ASTType::GotoStmt: {
         GotoNode* gotoNode = static_cast<GotoNode*>(node);

@@ -44,7 +44,7 @@ Value ExpressionEvaluator::parseToken(const std::string& token) {
         return Value(std::stoi(token));
     }
     else {
-        // It's a variable, look it up
+        // It's a variable
         return table_.getVariable(token);
     }
 }
