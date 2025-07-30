@@ -55,9 +55,9 @@ void GWBasic64::executeProgram()
 		{
 			auto tokens = lexer.tokenize(line);
 			auto ast = parser.parse(tokens);
-			executor.setCurrentLine(currentLine); // to allow jump -> initially 10 
+			executor.setCurrentLine(currentLine); // to allow jump -> initially 10 updates the executor linenumber
 			executor.execute(ast);
-			currentLine = executor.getNextLine(currentLine); // implemented for goto and for loop
+			currentLine = executor.getNextLine(currentLine); // implemented for goto so it alows executor to change the line number to be executed
 		}
 		catch (const std::invalid_argument& e) // to add check for CONT key strokes
 		{

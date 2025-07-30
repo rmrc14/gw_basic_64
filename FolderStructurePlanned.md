@@ -11,7 +11,8 @@
 │   ├── ProgramInterface/            ← REPL, screen rendering, input
 │   │   ├── CommandLineEditor.h
 │   │   ├── CommandLineEditor.cpp
-│   │   └── SpecialKeyHandler.h      ← (optional advanced REPL keys)
+│   │   ├── ScreenRender.h
+│   │   └── SpecialKeyHandler.h      ← (advanced REPL keys)
 │   │
 │   ├── Storage/                     ← Stores program lines, line editing
 │   │   ├── ProgramMemory.h
@@ -29,17 +30,28 @@
 │   ├── Runtime/                     ← Executor & evaluator
 │   │   ├── StatementExecutor.h
 │   │   ├── StatementExecutor.cpp
-│   │   ├── ExpressionEvaluator.h    ← (optional, for parsing math)
+│   │   ├── ExpressionEvaluator.h    ← (for parsing math)
 │   │   ├── ExpressionEvaluator.cpp
+│   │   ├── DataManager.cpp
+│   │   ├── DataManager.h
+│   │   ├── FlowControl.cpp
+│   │   ├── FlowControl.h
+│   │   ├── IOHandler.cpp
+│   │   ├── IOHandler.h
+│   │   ├── SubroutineManager.cpp    -->assigned to magesh
+│   │   ├── SubroutineManager.h
+│   │   ├── FunctionLibraries.cpp    -->assigned to vijaylaxmi
+│   │   ├── FunctionLibraries.h
 │   │   ├── SymbolTable.h
 │   │   ├── SymbolTable.cpp
+│   │   ├── TypeSystem.cpp
 │   │   └── TypeSystem.h             ← Type system (int, string, etc.)
 │   │
 │   │
 │   ├── System/                      ← System functions & utilities
 │   │   ├── SystemInterface.h
 │   │   ├── SystemInterface_Windows.cpp
-│   │   ├── SystemInterface_MiniOS.cpp  //custom OS to be implemented do we need asm?
+│   │   ├── SystemInterface_MiniOS.cpp  //custom OS to be implemented do we need asm? requires x86_64-elf g++ crossCompiler
 │   │
 │   ├── Errors/                      ← Error handling
 │   │   ├── ErrorHandler.h
