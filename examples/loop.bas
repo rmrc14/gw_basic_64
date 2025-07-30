@@ -1,3 +1,4 @@
-10 FOR I = 1 TO 5 : PRINT I
-20 REM PRINT I
-30 REM NEXT I
+10 For I = 1 To 3
+20  LET X = X + I
+30 Next I
+40 PRINT X

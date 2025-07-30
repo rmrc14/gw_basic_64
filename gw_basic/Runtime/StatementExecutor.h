@@ -15,10 +15,14 @@ public:
 #include "ExpressionEvaluator.h"
 #include "ProgramMemory.h"
 #include "FlowControl.h"
+#include "DataManager.h"
+#include "SubroutineManager.h"
+
 
 class StatementExecutor {
 public:
     StatementExecutor(SymbolTable& table, ProgramMemory& mem);
+    void executeInput(InputNode* node);
 
     void execute(ASTNode* node);
     void setCurrentLine(int line);        // Needed for GOTO/FOR
@@ -26,20 +30,27 @@ public:
     void requestJump(int targetLine);     // Called from GOTO/IF THEN GOTO
 
 private:
+      
+
     SymbolTable& table_;
     ExpressionEvaluator evaluator_;
-
+    SubroutineManager subroutineManager_;
     ProgramMemory& programMemory_;
     FlowControl flowControl_;
+    DataManager dataManager_;
 
     int currentLine_ = -1;
     int jumpToLine_ = -1;
 
-
+    
     void executePrint(PrintNode* printNode);
     void executeLet(LetNode* letNode);
     void executeIf(ASTNode* node);
     void executeFor(ForNode* forNode);
+    void executeDoLoop(DoLoopNode* node);
+    void executeField(FieldNode* node);
+  
+
     Value evaluateExpr(ASTNode* exprNode);
     
 };
